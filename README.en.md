@@ -9,14 +9,17 @@ It is a work in progress (since 2021/04). I hope that this will complete within 
 MacBook Pro (13-in, 2019), macOS Catalina 10.15.6  
 Processor: 1.4 GHz Quad-Core Intel Core i5  
 
-## Softwares
-(Will fill when used)
-
 ## Micromouse
 CPU: STM32?  
 Sensors: Light sensor, push button, IMU  
 Motor:  
 Motor Driver:  
+
+## Softwares
+(Will fill when used)
+
+### Install
+Execute the commands below to install the necessary softwares.
 
 
 # Directories

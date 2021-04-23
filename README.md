@@ -8,14 +8,17 @@
 MacBook Pro (13-in, 2019), macOS Catalina 10.15.6  
 Processor: 1.4 GHz Quad-Core Intel Core i5  
 
-## ソフトウェア
-(Will fill when used)
-
 ## マイクロマウス機体
 CPU: STM32?  
 Sensors: Light sensor, push button, IMU  
 Motor:  
 Motor Driver:  
+
+## ソフトウェア
+(Will fill when used)
+
+### インストール方法
+以下のコマンドを実行してインストールしていきます。  
 
 # 階層の説明
 ## circuits
