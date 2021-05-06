@@ -34,5 +34,6 @@ Motor Driver:
 こちらのリポジトリは**MIT LICENSE**の基で公開されています。  
 詳しくは、[LICENSE](https://github.com/shu-rt/shu-poyo/blob/main/LICENSE)をご参照ください。
 
+// 階層分けしてますよっていうのをここで書いて、上のLICENSE文章にも記入しておくと良さそうです
 STMCubeMXで生成したソースコードについては、**Ultimate Liberty license SLA004**の基で公開されています。  
 詳しくは、[LICENSE](www.st.com/SLA0044)をご参照ください。
