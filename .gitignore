@@ -2,4 +2,4 @@
 ./*/.DS_Store
 ./software/*/build/
 ./software/*/build/*
-./software/*/.vscode/
+./software/*/.vscode/*
