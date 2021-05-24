@@ -16,6 +16,7 @@ Motor Driver: ?
 
 ## ソフトウェア
 |Tool |Name |Version |
+|----|----|----|
 |開発PC |macOS Catalina| 10.15.6|
 |エディタ |VS Code| 1.54.3|
 |パッケージ管理 |Homebrew| 2.4.16|
