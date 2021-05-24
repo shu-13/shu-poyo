@@ -1,6 +1,12 @@
 .DS_Store
-./*/.DS_Store
-./*/*/.DS_Store
-./software/*/build/
-./software/*/build/*
-./software/*/.vscode/*
+./software/.DS_Store
+./circuits/.DS_Store
+./hardware/.DS_Store
+./software/test_USB/build/
+./software/test_USB/build/*
+./software/test_USB/.vscode/*
+./software/test_USB/.vscode/
+./software/test_LED/build/
+./software/test_LED/build/*
+./software/test_LED/.vscode/*
+./software/test_LED/.vscode/
