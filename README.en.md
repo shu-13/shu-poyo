@@ -12,15 +12,40 @@ Processor: 1.4 GHz Quad-Core Intel Core i5
 ## Micromouse
 CPU: STM32?  
 Sensors: Light sensor, push button, IMU  
-Motor:  
-Motor Driver:  
+Motor: ?  
+Motor Driver: ?  
 
 ## Softwares
-(Will fill when used)
+|Tool |Name |Version |
+|Computer |macOS Catalina| 10.15.6|
+|Editor |VS Code| 1.54.3|
+|Package Manager |Homebrew| 2.4.16|
+|Flash write |Open-OCD |0.11.0 |
+|Code Generator |STM32CubeMX |6.2.1 |
+|GNU Tools |arm-none-eabi-gcc |9.2.1 |
 
 ### Install
-Execute the commands below to install the necessary softwares.
+Download VS Code from [here](https://code.visualstudio.com/download)  
+It may be good to download extensions such as **C/C++** and **Code Debugger**  
 
+Install Homebrew from its [official web page](https://brew.sh/)  
+Install GNU Tools
+```sh
+$ brew tap ArmMbed/homebrew-formulae
+$ brew install arm-none-eabi-gcc
+```
+
+Install Open-OCD
+```sh
+$ brew install open-ocd
+```
+
+Download STM32CubeMX from [here](https://www.st.com/ja/development-tools/stm32cubemx.html)  
+Open the setup wizard, `SetupSTM32CubeMX-X.X.X.app` to install STM32CubeMX  
+If nothing starts,   
+```sh
+(Directory where the .app file is)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
+```
 
 # Directories
 ## circuits

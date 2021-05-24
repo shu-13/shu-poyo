@@ -11,14 +11,41 @@ Processor: 1.4 GHz Quad-Core Intel Core i5
 ## マイクロマウス機体
 CPU: STM32?  
 Sensors: Light sensor, push button, IMU  
-Motor:  
-Motor Driver:  
+Motor: ?  
+Motor Driver: ?  
 
 ## ソフトウェア
-(Will fill when used)
+|Tool |Name |Version |
+|開発PC |macOS Catalina| 10.15.6|
+|エディタ |VS Code| 1.54.3|
+|パッケージ管理 |Homebrew| 2.4.16|
+|書き込み |Open-OCD |0.11.0 |
+|プログラム生成 |STM32CubeMX |6.2.1 |
+|GNU Tools |arm-none-eabi-gcc |9.2.1 |
 
 ### インストール方法
-以下のコマンドを実行してインストールしていきます。  
+VS Codeは[こちら](https://code.visualstudio.com/download)からインストールしましょう  
+C/C++とCodeDebuggerのエクステンションも用意するとよいです  
+
+[公式ページ](https://brew.sh/index_ja)より、Homebrewをインストールしましょう  
+次のコマンドで、GNU Toolsをインストールします
+```sh
+$ brew tap ArmMbed/homebrew-formulae
+$ brew install arm-none-eabi-gcc
+```
+
+次のコマンドで、フラッシュ書き込み用のソフトウェアをインストールします
+```sh
+$ brew install open-ocd
+```
+
+STM32CubeMXは[こちら](https://www.st.com/ja/development-tools/stm32cubemx.html)からダウンロードしましょう  
+`SetupSTM32CubeMX-X.X.X.app`を起動して、インストールしていきます  
+起動しない場合は次のコマンドを実行してみましょう(ダウンロードしたファイルに含まれているREADME.htmlに書かれていました)  
+```sh
+(.appがあるデイレクトりで)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
+```
+
 
 # 階層の説明
 ## circuits
