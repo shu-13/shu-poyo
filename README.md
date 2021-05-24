@@ -41,7 +41,7 @@ $ brew install open-ocd
 ```
 
 STM32CubeMXは[こちら](https://www.st.com/ja/development-tools/stm32cubemx.html)からダウンロードしましょう  
-`SetupSTM32CubeMX-X.X.X.app`を起動して、インストールしていきます  
+`SetupSTM32CubeMX-X.X.X.app`を起動して、インストールしていきます  
 起動しない場合は次のコマンドを実行してみましょう(ダウンロードしたファイルに含まれているREADME.htmlに書かれていました)  
 ```sh
 (.appがあるデイレクトりで)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 

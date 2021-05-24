@@ -42,7 +42,7 @@ $ brew install open-ocd
 ```
 
 Download STM32CubeMX from [here](https://www.st.com/ja/development-tools/stm32cubemx.html)  
-Open the setup wizard, `SetupSTM32CubeMX-X.X.X.app` to install STM32CubeMX  
+Open the setup wizard, `SetupSTM32CubeMX-X.X.X.app` to install STM32CubeMX  
 If nothing starts,   
 ```sh
 (Directory where the .app file is)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
