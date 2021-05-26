@@ -88,17 +88,17 @@ int main(void)
   MX_GPIO_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-  // char cdc_buff[40];
-  // uint16_t count=0;
+  char cdc_buff[40];
+  uint16_t count=0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */ 
   while (1)
   {
-    // sprintf(cdc_buff, "Count: %d\n\r", count++);
-    // CDC_Transmit_FS((uint8_t*)cdc_buff,strlen(cdc_buff));
-    // HAL_Delay(1000);
+    sprintf(cdc_buff, "Count: %d\n\r", count++);
+    CDC_Transmit_FS((uint8_t*)cdc_buff,strlen(cdc_buff));
+    HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
