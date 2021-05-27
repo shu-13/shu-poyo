@@ -47,6 +47,13 @@ If nothing starts,
 ```sh
 (Directory where the .app file is)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
 ```
+### Flash write!
+#### Blue Pill　(STM32F103C8T6)
+Connect SWCLK, SWDIO, GND, and 3.3V of the Blue Pill and ST-Link V2 via wires.  
+Connect ST-Link V2 to your PC. The last half of the command below includes the path the the `.elf` file with the flash_elf command. Change the path to match your environment.
+```sh
+(openocd.cfgがあるデイレクトリで)$ openocd -f ./openocd.cfg -c "flash_elf path/to/XXX.elf"
+```
 
 # Directories
 ## circuits
