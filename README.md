@@ -44,9 +44,16 @@ STM32CubeMXは[こちら](https://www.st.com/ja/development-tools/stm32cubemx.ht
 `SetupSTM32CubeMX-X.X.X.app`を起動して、インストールしていきます  
 起動しない場合は次のコマンドを実行してみましょう(ダウンロードしたファイルに含まれているREADME.htmlに書かれていました)  
 ```sh
-(.appがあるデイレクトりで)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
+(.appがあるデイレクトリで)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
 ```
-
+### 書き込み方法
+#### Blue Pill(STM32F103C8T6)の場合
+Blue PillとST-Link V2をジャンパワイヤなどで接続しましょう  
+お互いにSWDIO, SWCLK, GND, 3.3Vを接続します、詳しくはこちらの[ブログ](https://rt-net.jp/mobility/archives/16231)を参照してください
+ST-Link V2をPCに接続しましょう。後半のダブルクオーテーションの中身では、flash_elfとともに、ビルドして生成した`.elf`を参照しますので、適宜変更しましょう  
+```sh
+(openocd.cfgがあるデイレクトリで)$ openocd -f ./openocd.cfg -c "flash_elf path/to/XXX.elf"
+```
 
 # 階層の説明
 ## circuits
