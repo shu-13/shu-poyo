@@ -1,15 +1,3 @@
-./software/.DS_Store
-./software/*/.DS_Store
-./software/*/*/.DS_Store
-./circuits/.DS_Store
-./hardware/.DS_Store
-./software/STM32F103C8T6/test_USB/build/
-./software/STM32F103C8T6/test_USB/build/*
-./software/STM32F103C8T6/test_LED/build/
-./software/STM32F103C8T6/test_LED/build/*
-./software/STM32F303K8T6/flash_led/build/
-./software/STM32F303K8T6/flash_led/build*
-
 # Compiled source #
 ###################
 *.com
@@ -24,6 +12,7 @@
 *.hex
 *.map
 *.lst
+*.ini
 
 # OS generated files #
 ######################
@@ -34,3 +23,5 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.metadata
+
