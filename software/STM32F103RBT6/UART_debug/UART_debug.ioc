@@ -2,7 +2,7 @@
 Mcu.Family=STM32F1
 ProjectManager.MainLocation=Core/Src
 RCC.MCOFreq_Value=64000000
-ProjectManager.ProjectFileName=USB_debug.ioc
+ProjectManager.ProjectFileName=UART_debug.ioc
 USART2.IPParameters=VirtualMode
 ProjectManager.KeepUserCode=true
 Mcu.UserName=STM32F103RBTx
@@ -69,7 +69,7 @@ ProjectManager.AskForMigrate=true
 Mcu.Name=STM32F103R(8-B)Tx
 ProjectManager.HalAssertFull=false
 PA2.Signal=USART2_TX
-ProjectManager.ProjectName=USB_debug
+ProjectManager.ProjectName=UART_debug
 ProjectManager.UnderRoot=true
 RCC.PLLMCOFreq_Value=32000000
 ProjectManager.CoupleFile=false
