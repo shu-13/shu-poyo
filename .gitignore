@@ -13,6 +13,8 @@
 *.map
 *.lst
 *.ini
+*.su
+*.list
 
 # OS generated files #
 ######################
