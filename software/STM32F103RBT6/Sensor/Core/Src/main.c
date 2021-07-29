@@ -97,47 +97,49 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   uint32_t adc_val;
-  char msg[30];
-  char low_msg[] = "Lower than constant number \n\r";
-  char init[] = "Started! \n\r";
+  // char msg[30];
+  // char low_msg[] = "Lower than constant number \n\r";
+  // char init[] = "Started! \n\r";
   setbuf(stdout, NULL);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_UART_Transmit(&huart2, (uint8_t *)init, sizeof(init), 100);
+  // HAL_UART_Transmit(&huart2, (uint8_t *)init, sizeof(init), 100);
+  printf("Started! \n\r");
   while (1)
   {
 	  // initiate variables
 	  adc_val = 0.0;
-	  memset(msg, '\0', sizeof(msg));
+	  // memset(msg, '\0', sizeof(msg));
 	  // ADC sequence
 	  HAL_ADC_Start(&hadc1);
 	  HAL_ADC_PollForConversion(&hadc1, 1000);
 	  adc_val = HAL_ADC_GetValue(&hadc1);
 
 	  // Adding sensor value to msg variable
-	  sprintf(msg, "Received data: %d \n\r", adc_val);
+	  // sprintf(msg, "Received data: %d \n\r", adc_val);
 
 	  if(adc_val > 1){
 		  // Outputting the sensor value via UART, if value is more than 1
 		  // Toggle the LED between on and off
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		  // Transmit word string
-		  HAL_UART_Transmit(&huart2, (uint8_t *)msg, sizeof(msg), 100);
+		  // HAL_UART_Transmit(&huart2, (uint8_t *)msg, sizeof(msg), 100);
 		  // Transmit sensor value
-		  HAL_UART_Transmit(&huart2, (uint8_t *)adc_val, sizeof(adc_val), 100);
+		  // HAL_UART_Transmit(&huart2, (uint8_t *)adc_val, sizeof(adc_val), 100);
+		  printf("Received value %ld \n\r", adc_val);
 		  HAL_Delay(500);
 	  }else{
 		  // Output low word string if value is lower or equal to 1
 		  // Transmit word string
-		  HAL_UART_Transmit(&huart2, (uint8_t *)low_msg, sizeof(low_msg), 100);
+		  // HAL_UART_Transmit(&huart2, (uint8_t *)low_msg, sizeof(low_msg), 100);
+		  printf("Too low %ld \n\r", adc_val);
 		  HAL_Delay(500);
 	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	printf("Ending loop\n\r");
   }
   /* USER CODE END 3 */
 }
