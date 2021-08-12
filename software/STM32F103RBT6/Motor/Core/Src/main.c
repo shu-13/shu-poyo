@@ -105,6 +105,7 @@ int main(void)
 	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);	// Start PWM output
 	  HAL_Delay(1000);	// Rotate for 1 second
 	  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);	// Stop PWM output
+    HAL_Delay(1000);	// Stop for 1 second
 	/* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
