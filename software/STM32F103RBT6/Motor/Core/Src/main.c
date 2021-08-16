@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,7 +61,16 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int __io_putchar(int ch) {
+    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 100);
+    return ch;
+}
 
+int read_encoder(void){
+  uint16_t enc_buff = TIM2 ->CNT;
+  TIM2 ->CNT = 0;
+  return enc_buff;
+}
 /* USER CODE END 0 */
 
 /**
@@ -97,18 +106,29 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, 1);	// Mode selection
+  uint16_t count;
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder
+  setbuf(stdout, NULL);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, 1);	// Rotation direction
-	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);	// Sets the duty ratio, maximum value = Counter Period
-	  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);	// Start PWM output
-	  HAL_Delay(1000);	// Rotate for 1 second
-	  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);	// Stop PWM output
-	  HAL_Delay(1000);	// Stop for 1 second
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, 1);	// Rotation direction
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);	// Sets the duty ratio, maximum value = Counter Period
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);	// Start PWM output
+	printf("Motor rotating... \n\r");
+	HAL_Delay(1000);	// Rotate for 1 second
+	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);	// Stop PWM output
+	printf("Motor stopped... \n\r");
+	HAL_Delay(1000);	// Stop for 1 second
+
+    // Reading the encoder value
+	printf("Checking encoder... \n\r");
+    count += read_encoder();    // Reading the encoder's value
+    printf("Counted: %d\n\r",count);  // Display count value
+    HAL_Delay(100);   // Wait a bit
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
