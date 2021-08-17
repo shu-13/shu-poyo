@@ -66,9 +66,9 @@ int __io_putchar(int ch) {
     return ch;
 }
 
-int read_encoder(void){
-  uint16_t enc_buff = TIM2 ->CNT;
-  TIM2 ->CNT = 0;
+int16_t read_encoder(void){
+  uint16_t enc_buff = TIM2->CNT;
+  TIM2->CNT = 0;
   return enc_buff;
 }
 /* USER CODE END 0 */
@@ -106,7 +106,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, 1);	// Mode selection
-  uint16_t count;
+  int16_t count=0;
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder
   setbuf(stdout, NULL);
   /* USER CODE END 2 */
