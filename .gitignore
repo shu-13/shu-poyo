@@ -16,6 +16,10 @@
 *.su
 *.list
 
+# Debug files #
+###############
+*.launch
+
 # OS generated files #
 ######################
 .DS_Store
