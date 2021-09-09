@@ -79,7 +79,7 @@ ST-Link V2をPCに接続しましょう。後半のダブルクオーテーシ�
 
 # LICENSE
 こちらのリポジトリは**MIT LICENSE**の基で公開されています。  
-詳しくは、[LICENSE](https://github.com/shu-rt/shu-poyo/blob/main/LICENSE)をご参照ください。
+詳しくは、[LICENSE](./LICENSE)をご参照ください。
 
 "software"ディレクトリにはSTM32CubeMXで生成したソースコードが含まれています。  
 それらの各ソースコードについては、各ファイルのヘッダーに明記されているライセンスに従います。
