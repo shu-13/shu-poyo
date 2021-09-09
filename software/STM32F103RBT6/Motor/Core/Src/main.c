@@ -42,6 +42,7 @@
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim4;
 
 UART_HandleTypeDef huart2;
 
@@ -55,18 +56,19 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int __io_putchar(int ch) {
+int __io_putchar(int ch){
     HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 100);
     return ch;
 }
 
-int16_t read_encoder(void){
+uint16_t read_encoder(void){
   uint16_t enc_buff = TIM2->CNT;
   TIM2->CNT = 0;
   return enc_buff;
@@ -104,10 +106,12 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, 1);	// Mode selection
-  int16_t count=0;
+  // uint16_t count=0;
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, 1);	// Rotation direction
   setbuf(stdout, NULL);
   /* USER CODE END 2 */
 
@@ -118,17 +122,19 @@ int main(void)
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, 1);	// Rotation direction
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);	// Sets the duty ratio, maximum value = Counter Period
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);	// Start PWM output
-	printf("Motor rotating... \n\r");
+	// printf("Motor rotating... \n\r");
 	HAL_Delay(1000);	// Rotate for 1 second
-	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);	// Stop PWM output
-	printf("Motor stopped... \n\r");
-	HAL_Delay(1000);	// Stop for 1 second
-
+	// HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);	// Stop PWM output
+	// printf("Motor stopped... \n\r");
+	// HAL_Delay(1000);	// Stop for 1 second
+	/*
     // Reading the encoder value
 	printf("Checking encoder... \n\r");
     count += read_encoder();    // Reading the encoder's value
     printf("Counted: %d\n\r",count);  // Display count value
     HAL_Delay(100);   // Wait a bit
+	printf("Counted: %d\n\r",count);  // Display count value
+	*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -294,6 +300,51 @@ static void MX_TIM2_Init(void)
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief TIM4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM4_Init(void)
+{
+
+  /* USER CODE BEGIN TIM4_Init 0 */
+
+  /* USER CODE END TIM4_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM4_Init 1 */
+
+  /* USER CODE END TIM4_Init 1 */
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 32000-1;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 1000-1;
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM4_Init 2 */
+  HAL_TIM_Base_Start_IT(&htim4);
+  /* USER CODE END TIM4_Init 2 */
 
 }
 
