@@ -20,6 +20,15 @@
 ###############
 *.launch
 
+# KiCAD files#
+##############
+*.lib
+*.kicad_pcb
+*.pro
+*.sch
+*.sch-bak
+fp-info-cache
+
 # OS generated files #
 ######################
 .DS_Store
