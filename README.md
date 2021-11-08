@@ -1,4 +1,4 @@
-[JP](https://github.com/shu-rt/shu-poyo/) | [ENG](https://github.com/shu-rt/shu-poyo/blob/main/README.en.md)
+[JP](./README.md) | [ENG](./README.en.md)
 
 # shu-poyo
 しゅうの自作マウス研修用のデータを管理する場所です
@@ -22,6 +22,7 @@ Motor Driver: ?
 |パッケージ管理 |Homebrew| 2.4.16|
 |書き込み |Open-OCD |0.11.0 |
 |プログラム生成 |STM32CubeMX |6.2.1 |
+|統合開発環境 |STM32CubeIDE |1.6.1 |
 |GNU Tools |arm-none-eabi-gcc |9.2.1 |
 
 ### インストール方法
