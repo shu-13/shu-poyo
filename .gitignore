@@ -24,10 +24,13 @@
 ##############
 *.lib
 *.kicad_pcb
+*.kicad_pcb-bak
 *.pro
 *.sch
 *.sch-bak
 fp-info-cache
+*.dcm
+sym-lib-table
 
 # Compressed files #
 ######################
