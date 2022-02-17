@@ -29,6 +29,11 @@
 *.sch-bak
 fp-info-cache
 
+# Compressed files #
+######################
+.zip
+.tar
+
 # OS generated files #
 ######################
 .DS_Store
