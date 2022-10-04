@@ -31,7 +31,7 @@
 fp-info-cache
 *.dcm
 sym-lib-table
-*/gerber/*
+gerber/
 
 # Compressed files #
 ######################
