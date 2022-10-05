@@ -164,6 +164,7 @@ int main(void)
     TOGGLE_LED3;
     HAL_TIM_PWM_Stop(&htim1, MOTORL_CH1); // Stop PWM
     HAL_Delay(1000);
+    HAL_TIM_Base_Stop_IT(&htim4);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -581,7 +582,7 @@ static void MX_TIM4_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM4_Init 2 */
-
+  HAL_TIM_Base_Start_IT(&htim4);
   /* USER CODE END TIM4_Init 2 */
 
 }
