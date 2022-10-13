@@ -121,7 +121,7 @@ int main(void)
   setbuf(stdout, NULL);
   BUZZER_OFF;
   BUZZER_SET_LO;
-  MOTOR_SET_ON;
+  MOTOR_MODE_SET_PE;
   MOTORL_FORWARD;	// Rotation direction
   uint32_t adc_val;
   int sen_id = 0;
@@ -148,8 +148,8 @@ int main(void)
     if(sen_id == 4) sen_id = 0;
 
     // Checking the motor
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH1, 500);	// Sets the duty ratio, maximum value = Counter Period
-	  HAL_TIM_PWM_Start(&htim1, MOTORL_CH1);	// Start PWM output
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 500);	// Sets the duty ratio, maximum value = Counter Period
+	  HAL_TIM_PWM_Start(&htim1, MOTORL_CH2);	// Start PWM output
     
     printf("Turn LED on \n\r");
     TOGGLE_LED3;
@@ -162,7 +162,7 @@ int main(void)
     SENSOR_OUT_L_OFF;
     printf("Turn LED off \n\r");
     TOGGLE_LED3;
-    HAL_TIM_PWM_Stop(&htim1, MOTORL_CH1); // Stop PWM
+    HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
     HAL_Delay(1000);
     HAL_TIM_Base_Stop_IT(&htim4);
     /* USER CODE END WHILE */
@@ -410,10 +410,6 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
   {
     Error_Handler();
@@ -640,7 +636,7 @@ static void MX_GPIO_Init(void)
                           |LED1_Pin|LED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, BUZZ_Level_Pin|BUZZ_OnOff_Pin|Motor_Mode_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, BUZZ_Level_Pin|BUZZ_OnOff_Pin|GPIO_PIN_8|Motor_Mode_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Light_Left_OUT_Pin|SPI2_CS_Pin|BAT_LED_Pin, GPIO_PIN_RESET);
@@ -657,8 +653,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUZZ_Level_Pin BUZZ_OnOff_Pin Motor_Mode_Pin */
-  GPIO_InitStruct.Pin = BUZZ_Level_Pin|BUZZ_OnOff_Pin|Motor_Mode_Pin;
+  /*Configure GPIO pins : BUZZ_Level_Pin BUZZ_OnOff_Pin PA8 Motor_Mode_Pin */
+  GPIO_InitStruct.Pin = BUZZ_Level_Pin|BUZZ_OnOff_Pin|GPIO_PIN_8|Motor_Mode_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
