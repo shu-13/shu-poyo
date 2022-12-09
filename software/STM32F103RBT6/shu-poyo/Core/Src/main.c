@@ -132,20 +132,20 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    adc_val = 0.0;
+    // adc_val = 0.0;
     // Checking the sensor
-    SENSOR_OUT_R_ON;
-    SENSOR_OUT_FR_ON; 
+    // SENSOR_OUT_R_ON;
+    // SENSOR_OUT_FR_ON; 
     // SENSOR_OUT_FL_ON;
-    SENSOR_OUT_L_ON;
+    // SENSOR_OUT_L_ON;
 
     // ADC Sequence
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, 1000);
-    adc_val = HAL_ADC_GetValue(&hadc1);
-    sen_id++;
-    printf("Here's the value of Sensor No. %d : %ld \n\r", sen_id, adc_val);
-    if(sen_id == 4) sen_id = 0;
+    // HAL_ADC_Start(&hadc1);
+    // HAL_ADC_PollForConversion(&hadc1, 1000);
+    // adc_val = HAL_ADC_GetValue(&hadc1);
+    // sen_id++;
+    // printf("Here's the value of Sensor No. %d : %ld \n\r", sen_id, adc_val);
+    // if(sen_id == 4) sen_id = 0;
 
     // Checking the motor
     __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 500);	// Sets the duty ratio, maximum value = Counter Period
@@ -154,16 +154,16 @@ int main(void)
     printf("Turn LED on \n\r");
     TOGGLE_LED3;
     
-    HAL_Delay(1000);
+    HAL_Delay(2000);
 
-    SENSOR_OUT_R_OFF;
-    SENSOR_OUT_FR_OFF;
+    // SENSOR_OUT_R_OFF;
+    // SENSOR_OUT_FR_OFF;
     // SENSOR_OUT_FL_OFF;
-    SENSOR_OUT_L_OFF;
+    // SENSOR_OUT_L_OFF;
     printf("Turn LED off \n\r");
     TOGGLE_LED3;
     HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
-    HAL_Delay(1000);
+    HAL_Delay(2000);
     HAL_TIM_Base_Stop_IT(&htim4);
     /* USER CODE END WHILE */
 
