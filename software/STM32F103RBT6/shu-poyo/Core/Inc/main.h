@@ -100,6 +100,10 @@ int __io_putchar(int ch);
 #define SW1_GPIO_Port GPIOC
 #define SW2_Pin GPIO_PIN_9
 #define SW2_GPIO_Port GPIOC
+#define MotorL_CH1_Pin GPIO_PIN_8
+#define MotorL_CH1_GPIO_Port GPIOA
+#define MotorL_CH2_Pin GPIO_PIN_9
+#define MotorL_CH2_GPIO_Port GPIOA
 #define MotorR_CH1_Pin GPIO_PIN_10
 #define MotorR_CH1_GPIO_Port GPIOA
 #define MotorR_CH2_Pin GPIO_PIN_11
