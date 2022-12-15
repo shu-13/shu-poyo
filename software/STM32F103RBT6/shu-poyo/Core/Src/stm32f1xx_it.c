@@ -216,7 +216,6 @@ void TIM4_IRQHandler(void)
     case 3:
       num++;
     default:
-      printf("Entered default... \n\r");
       num = 0;
   }
   /* USER CODE END TIM4_IRQn 0 */
