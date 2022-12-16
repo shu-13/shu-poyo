@@ -79,6 +79,17 @@ int __io_putchar(int ch){
   return ch;
 }
 
+uint16_t read_left_encoder(void){
+  uint16_t enc_buff = TIM2->CNT;
+  TIM2->CNT = 0;
+  return enc_buff;
+}
+
+uint16_t read_right_encoder(void){
+  uint16_t enc_buff = TIM3->CNT;
+  TIM3->CNT = 0;
+  return enc_buff;
+}
 /* USER CODE END 0 */
 
 /**
@@ -118,13 +129,29 @@ int main(void)
   MX_I2C2_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
+  // Printf thing
   setbuf(stdout, NULL);
-  BUZZER_OFF;
-  BUZZER_SET_LO;
+  // Buzzer things
+  BUZZER_LO_OFF;
+  BUZZER_HI_OFF;
+  // Motor settings
   MOTOR_MODE_SET_PE;
-  MOTORL_FORWARD;	// Rotation direction
-  uint32_t adc_val;
-  int sen_id = 0;
+  MOTORL_FORWARD;	// Motor L Rotation direction
+  MOTORR_FORWARD;	// Motor R Rotation direction
+  HAL_TIM_PWM_Start(&htim1, MOTORL_CH2);	// Start PWM output
+  HAL_TIM_PWM_Start(&htim1, MOTORR_CH2);  // Start PWM output
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
+  // Checking the sensor
+  // int sen_id = 0;
+  // uint32_t adc_val;
+  SENSOR_OUT_R_ON;
+  SENSOR_OUT_FR_ON; 
+  SENSOR_OUT_FL_ON;
+  SENSOR_OUT_L_ON;
+
+  // Turns LED0 ON!
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
   printf("Initiated! \n\r");
   /* USER CODE END 2 */
 
@@ -133,11 +160,6 @@ int main(void)
   while (1)
   {
     // adc_val = 0.0;
-    // Checking the sensor
-    // SENSOR_OUT_R_ON;
-    // SENSOR_OUT_FR_ON; 
-    // SENSOR_OUT_FL_ON;
-    // SENSOR_OUT_L_ON;
 
     // ADC Sequence
     // HAL_ADC_Start(&hadc1);
@@ -148,27 +170,24 @@ int main(void)
     // if(sen_id == 4) sen_id = 0;
 
     // Checking the motor
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 500);	// Sets the duty ratio, maximum value = Counter Period
-	  HAL_TIM_PWM_Start(&htim1, MOTORL_CH2);	// Start PWM output
-    
-    printf("Turn LED on \n\r");
-    TOGGLE_LED3;
-    
+    // Sets the duty ratio, maximum value = Counter Period
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 500);
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 500);
+
     HAL_Delay(2000);
 
-    // SENSOR_OUT_R_OFF;
-    // SENSOR_OUT_FR_OFF;
-    // SENSOR_OUT_FL_OFF;
-    // SENSOR_OUT_L_OFF;
-    printf("Turn LED off \n\r");
-    TOGGLE_LED3;
-    HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
+    if(read_left_encoder() > 0) TOGGLE_LED3;
+    if(read_right_encoder() > 0) TOGGLE_LED1;
+
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 0);
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 0);
+    
     HAL_Delay(2000);
-    HAL_TIM_Base_Stop_IT(&htim4);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
+  // HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
   /* USER CODE END 3 */
 }
 
