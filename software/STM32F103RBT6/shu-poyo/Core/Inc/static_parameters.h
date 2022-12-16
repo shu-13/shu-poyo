@@ -4,10 +4,10 @@
 #include "stm32f1xx_hal.h"
 
 // Buzzer
-#define BUZZER_ON HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
-#define BUZZER_OFF HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
-#define BUZZER_SET_LO HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, 0);
-#define BUZZER_SET_HI HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, 1);
+#define BUZZER_LO_ON HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
+#define BUZZER_LO_OFF HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
+#define BUZZER_HI_ON HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, 1);
+#define BUZZER_HI_OFF HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, 0);
 
 // LEDs
 #define TOGGLE_LED0 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
