@@ -171,17 +171,18 @@ int main(void)
 
     // Checking the motor
     // Sets the duty ratio, maximum value = Counter Period
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 500);
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 500);
+    // 15/1000 is the maximum ratio. 1.5%?
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 15);
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 15);
 
     HAL_Delay(2000);
-
-    if(read_left_encoder() > 0) TOGGLE_LED3;
-    if(read_right_encoder() > 0) TOGGLE_LED1;
 
     __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 0);
     __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 0);
     
+    if(read_left_encoder() > 0) TOGGLE_LED3;
+    if(read_right_encoder() > 0) TOGGLE_LED1;
+
     HAL_Delay(2000);
     /* USER CODE END WHILE */
 
