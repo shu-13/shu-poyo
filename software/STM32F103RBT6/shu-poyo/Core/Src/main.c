@@ -170,16 +170,17 @@ int main(void)
     // if(sen_id == 4) sen_id = 0;
 
     // Checking the motor
-    // Sets the duty ratio, maximum value = Counter Period
-    // 15/1000 is the maximum ratio. 1.5%?
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 15);
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 15);
+    // Sets the pulse for the duty ratio. 
+    // The pulse's maximum value = Counter Period
+    // duty ratio = pulse / Counter Period 
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 72);
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 72);
 
     HAL_Delay(2000);
 
     __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 0);
     __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 0);
-    
+
     if(read_left_encoder() > 0) TOGGLE_LED3;
     if(read_right_encoder() > 0) TOGGLE_LED1;
 
@@ -210,7 +211,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -229,7 +230,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV4;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -398,9 +399,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 32-1;
+  htim1.Init.Prescaler = 1-1;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 1000-1;
+  htim1.Init.Period = 360-1;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
