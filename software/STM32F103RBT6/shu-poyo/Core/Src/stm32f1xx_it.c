@@ -205,18 +205,29 @@ void SysTick_Handler(void)
 void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
-  int num;
+  static char num=0;
   // Should num and adc_val be global????????
   switch(num){
     case 0:
-      // read_sensor_R(adc_val);
+      // read_sensor_R();
       num++;
+      break;
     case 1:
+      // read_sensor_FL()
       num++;
+      break;
+    case 2:
+      // read_sensor_FR();
+      num++;
+      break;
     case 3:
-      num++;
-    default:
+      // read_sensor_L();
       num = 0;
+      break;
+    default:
+      // Battery ADC?
+      num = 0;
+      break;
   }
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);

@@ -142,12 +142,13 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, MOTORR_CH2);  // Start PWM output
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
-  // Checking the sensor
+  // Turn off the sensor
   SENSOR_OUT_R_OFF;
   SENSOR_OUT_FR_OFF; 
   SENSOR_OUT_FL_OFF;
   SENSOR_OUT_L_OFF;
-
+  // Start TIM4
+  HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
   printf("Initiated! \n\r");
@@ -570,7 +571,7 @@ static void MX_TIM4_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM4_Init 2 */
-  HAL_TIM_Base_Start_IT(&htim4);
+
   /* USER CODE END TIM4_Init 2 */
 
 }
