@@ -170,21 +170,8 @@ int main(void)
     // if(sen_id == 4) sen_id = 0;
 
     // Checking the motor
-    // Sets the pulse for the duty ratio. 
-    // The pulse's maximum value = Counter Period
-    // duty ratio = pulse / Counter Period 
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 72);
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 72);
+    test_run_forward(&htim1);
 
-    HAL_Delay(2000);
-
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 0);
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 0);
-
-    if(read_left_encoder() > 0) TOGGLE_LED3;
-    if(read_right_encoder() > 0) TOGGLE_LED1;
-
-    HAL_Delay(2000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
