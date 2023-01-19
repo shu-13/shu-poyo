@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "run.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -143,12 +143,10 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
   // Checking the sensor
-  // int sen_id = 0;
-  // uint32_t adc_val;
-  SENSOR_OUT_R_ON;
-  SENSOR_OUT_FR_ON; 
-  SENSOR_OUT_FL_ON;
-  SENSOR_OUT_L_ON;
+  SENSOR_OUT_R_OFF;
+  SENSOR_OUT_FR_OFF; 
+  SENSOR_OUT_FL_OFF;
+  SENSOR_OUT_L_OFF;
 
   // Turns LED0 ON!
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
@@ -159,16 +157,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // adc_val = 0.0;
-
-    // ADC Sequence
-    // HAL_ADC_Start(&hadc1);
-    // HAL_ADC_PollForConversion(&hadc1, 1000);
-    // adc_val = HAL_ADC_GetValue(&hadc1);
-    // sen_id++;
-    // printf("Here's the value of Sensor No. %d : %ld \n\r", sen_id, adc_val);
-    // if(sen_id == 4) sen_id = 0;
-
     // Checking the motor
     test_run_forward(&htim1);
 
