@@ -7,33 +7,18 @@ void test_run_forward(TIM_HandleTypeDef *htim){
     // Sets the pulse for the duty ratio. 
     // The pulse's maximum value = Counter Period
     // duty ratio = pulse / Counter Period 
-    __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 18);
-    __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 18);
+    for(uint16_t i=0; i<5; i++){
+        __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 18*(i+1));
+        __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 18*(i+1));
 
-    HAL_Delay(1000);
+        HAL_Delay(1000);
+    }
 
-    __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 36);
-    __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 36);
+    for(uint16_t i=0; i<5; i++){
+        __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 18*(5-i));
+        __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 18*(5-i));
 
-    HAL_Delay(1000);
+        HAL_Delay(1000);
+    }
 
-    __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 72);
-    __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 72);
-
-    HAL_Delay(1000);
-
-    __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 100);
-    __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 100);
-
-    HAL_Delay(1000);
-
-    __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 72);
-    __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 72);
-
-    HAL_Delay(1000);
-  
-    __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 36);
-    __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 36);
-
-    HAL_Delay(1000);
 }
