@@ -1,15 +1,13 @@
 // Sensor functions for shu-poyo
 #ifndef __SENSORS_H
+#define __SENSORS_H
 
-#include "stm32f1xx_hal.h"
-#include "parameters.h"
+#include "main.h"
+
+void sensors_init(void);
 
 // How should i give the ADC guy...?
-float read_sensor_R(ADC_HandleTypeDef *hadc, float adc_val);
-// float read_sensor_FR(ADC_HandleTypeDef *hadc, float adc_val);
-// float read_sensor_FL(ADC_HandleTypeDef *hadc, float adc_val);
-// float read_sensor_L(ADC_HandleTypeDef *hadc, float adc_val);
+void read_sensor_R(void);
 
-#define __SENSORS_H
 
 #endif /* __SENSORS_H */
