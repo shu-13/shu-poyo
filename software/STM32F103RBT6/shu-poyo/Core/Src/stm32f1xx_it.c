@@ -23,6 +23,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "sensors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -209,7 +210,7 @@ void TIM4_IRQHandler(void)
   // Should num and adc_val be global????????
   switch(num){
     case 0:
-      // read_sensor_R();
+      read_sensor_R();
       num++;
       break;
     case 1:
