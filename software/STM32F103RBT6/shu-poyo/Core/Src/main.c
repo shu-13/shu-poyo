@@ -22,7 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "parameters.h"
 #include "run.h"
+#include "global_var.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
