@@ -208,7 +208,6 @@ void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
   static char num=0;
-  // Should num and adc_val be global????????
   switch(num){
     case 0:
       read_sensor_R();
@@ -224,9 +223,9 @@ void TIM4_IRQHandler(void)
       break;
     case 3:
       read_sensor_L();
-      num = 0;
+      num++;
       break;
-    default:
+    case 4:
       check_batt();
       num = 0;
       break;
