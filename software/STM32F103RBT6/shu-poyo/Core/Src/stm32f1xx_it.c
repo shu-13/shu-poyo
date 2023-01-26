@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "sensors.h"
+#include "adc_batt.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -226,7 +227,7 @@ void TIM4_IRQHandler(void)
       num = 0;
       break;
     default:
-      // Battery ADC?
+      check_batt();
       num = 0;
       break;
   }
