@@ -5,21 +5,24 @@
 #include <stdio.h>
 
 /* Sensor values */
-typedef enum{
+enum enDIST_SEN_ID{
     DIST_SEN_R = 0,
     DIST_SEN_L,
     DIST_SEN_FR,
     DIST_SEN_FL,
     DIST_SEN_NUM,
-}enDIST_SEN_ID;
+};
+
+/* Battery value */
+uint16_t batt_val;
 
 /* Direction */
-typedef enum{
+enum enMAP_HEAD_DIR{
     NORTH = 0,
     EAST,
     SOUTH,
     WEST,
     MAP_HEAD_DIR_MAX,
-}enMAP_HEAD_DIR;
+};
 
 #endif /* __GLOBAL__VAR_H */

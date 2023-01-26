@@ -18,6 +18,14 @@ typedef struct{
 
 stDIST_SEN st_sen[DIST_SEN_NUM];
 
+void get_sensor_values(void){
+    printf("R: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_R].s_cur, st_sen[DIST_SEN_R].s_offset);
+    printf("FR: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_FR].s_cur, st_sen[DIST_SEN_FR].s_offset);
+    printf("FL: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_FL].s_cur, st_sen[DIST_SEN_FL].s_offset);
+    printf("L: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_L].s_cur, st_sen[DIST_SEN_L].s_offset);
+    printf("========== \n\r");
+}
+
 void sensors_init(void){
     // hoge
 }
