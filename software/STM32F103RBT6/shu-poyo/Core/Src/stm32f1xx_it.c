@@ -214,15 +214,15 @@ void TIM4_IRQHandler(void)
       num++;
       break;
     case 1:
-      // read_sensor_FL()
+      read_sensor_FL();
       num++;
       break;
     case 2:
-      // read_sensor_FR();
+      read_sensor_FR();
       num++;
       break;
     case 3:
-      // read_sensor_L();
+      read_sensor_L();
       num = 0;
       break;
     default:

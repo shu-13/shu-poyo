@@ -6,8 +6,10 @@
 
 void sensors_init(void);
 
-// How should i give the ADC guy...?
 void read_sensor_R(void);
+void read_sensor_L(void);
+void read_sensor_FR(void);
+void read_sensor_FL(void);
 
 
 #endif /* __SENSORS_H */
