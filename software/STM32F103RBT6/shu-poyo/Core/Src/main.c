@@ -22,7 +22,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "parameters.h"
+#include "run.h"
+#include "global_var.h"
+#include "sensors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -79,6 +82,17 @@ int __io_putchar(int ch){
   return ch;
 }
 
+uint16_t read_left_encoder(void){
+  uint16_t enc_buff = TIM2->CNT;
+  TIM2->CNT = 0;
+  return enc_buff;
+}
+
+uint16_t read_right_encoder(void){
+  uint16_t enc_buff = TIM3->CNT;
+  TIM3->CNT = 0;
+  return enc_buff;
+}
 /* USER CODE END 0 */
 
 /**
@@ -118,13 +132,28 @@ int main(void)
   MX_I2C2_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
+  // Printf thing
   setbuf(stdout, NULL);
-  BUZZER_OFF;
-  BUZZER_SET_LO;
+  // Buzzer things
+  BUZZER_LO_OFF;
+  BUZZER_HI_OFF;
+  // Motor settings
   MOTOR_MODE_SET_PE;
-  MOTORL_FORWARD;	// Rotation direction
-  uint32_t adc_val;
-  int sen_id = 0;
+  MOTORL_FORWARD;	// Motor L Rotation direction
+  MOTORR_FORWARD;	// Motor R Rotation direction
+  HAL_TIM_PWM_Start(&htim1, MOTORL_CH2);	// Start PWM output
+  HAL_TIM_PWM_Start(&htim1, MOTORR_CH2);  // Start PWM output
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
+  // Turn off the sensor
+  SENSOR_OUT_R_OFF;
+  SENSOR_OUT_FR_OFF; 
+  SENSOR_OUT_FL_OFF;
+  SENSOR_OUT_L_OFF;
+  // Start TIM4
+  HAL_TIM_Base_Start_IT(&htim4);
+  // Turns LED0 ON!
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
   printf("Initiated! \n\r");
   /* USER CODE END 2 */
 
@@ -132,43 +161,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    adc_val = 0.0;
-    // Checking the sensor
-    SENSOR_OUT_R_ON;
-    SENSOR_OUT_FR_ON; 
-    // SENSOR_OUT_FL_ON;
-    SENSOR_OUT_L_ON;
-
-    // ADC Sequence
-    HAL_ADC_Start(&hadc1);
-    HAL_ADC_PollForConversion(&hadc1, 1000);
-    adc_val = HAL_ADC_GetValue(&hadc1);
-    sen_id++;
-    printf("Here's the value of Sensor No. %d : %ld \n\r", sen_id, adc_val);
-    if(sen_id == 4) sen_id = 0;
-
     // Checking the motor
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 500);	// Sets the duty ratio, maximum value = Counter Period
-	  HAL_TIM_PWM_Start(&htim1, MOTORL_CH2);	// Start PWM output
-    
-    printf("Turn LED on \n\r");
-    TOGGLE_LED3;
-    
+    // test_run_forward(&htim1);
+
+    // Checking the sensors
+    get_sensor_values();
     HAL_Delay(1000);
 
-    SENSOR_OUT_R_OFF;
-    SENSOR_OUT_FR_OFF;
-    // SENSOR_OUT_FL_OFF;
-    SENSOR_OUT_L_OFF;
-    printf("Turn LED off \n\r");
-    TOGGLE_LED3;
-    HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
-    HAL_Delay(1000);
-    HAL_TIM_Base_Stop_IT(&htim4);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
+  // HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
   /* USER CODE END 3 */
 }
 
@@ -190,7 +194,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -209,7 +213,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV4;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -238,26 +242,26 @@ static void MX_ADC1_Init(void)
   hadc1.Instance = ADC1;
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.DiscontinuousConvMode = ENABLE;
+  hadc1.Init.NbrOfDiscConversion = 1;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion = 4;
+  hadc1.Init.NbrOfConversion = 9;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
     Error_Handler();
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_8;
+  sConfig.Channel = ADC_CHANNEL_11;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_28CYCLES_5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_15;
   sConfig.Rank = ADC_REGULAR_RANK_2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -265,7 +269,7 @@ static void MX_ADC1_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_13;
+  sConfig.Channel = ADC_CHANNEL_15;
   sConfig.Rank = ADC_REGULAR_RANK_3;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -273,8 +277,45 @@ static void MX_ADC1_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_11;
   sConfig.Rank = ADC_REGULAR_RANK_4;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_13;
+  sConfig.Rank = ADC_REGULAR_RANK_5;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Rank = ADC_REGULAR_RANK_6;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_8;
+  sConfig.Rank = ADC_REGULAR_RANK_7;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Rank = ADC_REGULAR_RANK_8;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_2;
+  sConfig.Rank = ADC_REGULAR_RANK_9;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -378,9 +419,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 32-1;
+  htim1.Init.Prescaler = 1-1;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 1000-1;
+  htim1.Init.Period = 360-1;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -411,10 +452,6 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
   {
     Error_Handler();
   }
@@ -557,9 +594,9 @@ static void MX_TIM4_Init(void)
 
   /* USER CODE END TIM4_Init 1 */
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 31;
+  htim4.Init.Prescaler = 35;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 999;
+  htim4.Init.Period = 199;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -578,7 +615,7 @@ static void MX_TIM4_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM4_Init 2 */
-  HAL_TIM_Base_Start_IT(&htim4);
+
   /* USER CODE END TIM4_Init 2 */
 
 }
@@ -636,7 +673,8 @@ static void MX_GPIO_Init(void)
                           |LED1_Pin|LED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, BUZZ_Level_Pin|BUZZ_OnOff_Pin|GPIO_PIN_8|Motor_Mode_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, BUZZ_Level_Pin|BUZZ_OnOff_Pin|MotorL_CH1_Pin|MotorR_CH1_Pin
+                          |Motor_Mode_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Light_Left_OUT_Pin|SPI2_CS_Pin|BAT_LED_Pin, GPIO_PIN_RESET);
@@ -653,8 +691,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUZZ_Level_Pin BUZZ_OnOff_Pin PA8 Motor_Mode_Pin */
-  GPIO_InitStruct.Pin = BUZZ_Level_Pin|BUZZ_OnOff_Pin|GPIO_PIN_8|Motor_Mode_Pin;
+  /*Configure GPIO pins : BUZZ_Level_Pin BUZZ_OnOff_Pin MotorL_CH1_Pin MotorR_CH1_Pin
+                           Motor_Mode_Pin */
+  GPIO_InitStruct.Pin = BUZZ_Level_Pin|BUZZ_OnOff_Pin|MotorL_CH1_Pin|MotorR_CH1_Pin
+                          |Motor_Mode_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

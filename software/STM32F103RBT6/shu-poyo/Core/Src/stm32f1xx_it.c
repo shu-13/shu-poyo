@@ -23,6 +23,8 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "sensors.h"
+#include "adc_batt.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -205,19 +207,28 @@ void SysTick_Handler(void)
 void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
-  int num;
-  // Should num and adc_val be global????????
+  static char num=0;
   switch(num){
     case 0:
-      // read_sensor_R(adc_val);
+      read_sensor_R();
       num++;
+      break;
     case 1:
+      read_sensor_FL();
       num++;
+      break;
+    case 2:
+      read_sensor_FR();
+      num++;
+      break;
     case 3:
+      read_sensor_L();
       num++;
-    default:
-      printf("Entered default... \n\r");
+      break;
+    case 4:
+      check_batt();
       num = 0;
+      break;
   }
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
