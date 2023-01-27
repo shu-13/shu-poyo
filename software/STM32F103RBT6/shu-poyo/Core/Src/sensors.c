@@ -19,10 +19,10 @@ typedef struct{
 stDIST_SEN st_sen[DIST_SEN_NUM];
 
 void get_sensor_values(void){
-    printf("R: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_R].s_cur, st_sen[DIST_SEN_R].s_offset);
-    printf("FR: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_FR].s_cur, st_sen[DIST_SEN_FR].s_offset);
-    printf("FL: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_FL].s_cur, st_sen[DIST_SEN_FL].s_offset);
-    printf("L: %4d, Offset: %4d \n\r", st_sen[DIST_SEN_L].s_cur, st_sen[DIST_SEN_L].s_offset);
+    printf("R: %4d \n\r", st_sen[DIST_SEN_R].s_cur);
+    printf("FR: %4d \n\r", st_sen[DIST_SEN_FR].s_cur);
+    printf("FL: %4d \n\r", st_sen[DIST_SEN_FL].s_cur);
+    printf("L: %4d \n\r", st_sen[DIST_SEN_L].s_cur);
     printf("========== \n\r");
 }
 
@@ -41,7 +41,7 @@ void read_sensor_R(void){
 
     // Turn LED on and wait a little
     SENSOR_OUT_R_ON;
-    for (int i=0; i<1000; i++);
+    for (int i=0; i<30; i++);
 
     // Read sensor value (LED ON)
     HAL_ADC_Start(&hadc1);
@@ -63,7 +63,7 @@ void read_sensor_L(void){
 
     // Turn LED on and wait a little
     SENSOR_OUT_L_ON;
-    for (int i=0; i<1000; i++);
+    for (int i=0; i<30; i++);
 
     // Read sensor value (LED ON)
     HAL_ADC_Start(&hadc1);
@@ -85,7 +85,7 @@ void read_sensor_FR(void){
 
     // Turn LED on and wait a little
     SENSOR_OUT_FR_ON;
-    for (int i=0; i<1000; i++);
+    for (int i=0; i<30; i++);
 
     // Read sensor value (LED ON)
     HAL_ADC_Start(&hadc1);
@@ -107,7 +107,7 @@ void read_sensor_FL(void){
 
     // Turn LED on and wait a little
     SENSOR_OUT_FL_ON;
-    for (int i=0; i<1000; i++);
+    for (int i=0; i<30; i++);
 
     // Read sensor value (LED ON)
     HAL_ADC_Start(&hadc1);
