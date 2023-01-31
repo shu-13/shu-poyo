@@ -94,6 +94,21 @@ uint16_t read_right_encoder(void){
   TIM3->CNT = 0;
   return enc_buff;
 }
+
+void exec_mode(int mode){
+  //wait a bit?
+
+  switch(mode){
+    case 1:
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+  }
+
+  // probably turn the motor off?
+}
 /* USER CODE END 0 */
 
 /**
@@ -151,6 +166,8 @@ int main(void)
   SENSOR_OUT_FR_OFF; 
   SENSOR_OUT_FL_OFF;
   SENSOR_OUT_L_OFF;
+  // Initiate the parameters
+  sensors_init();
   // Start TIM4
   HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!
@@ -162,12 +179,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // Checking the motor
-    // test_run_forward(&htim1);
+    HAL_Delay(CHATTERING_WAIT);
+    while(!(READ_SW0 & READ_SW1 & READ_SW2));
 
-    // Checking the sensors
-    get_sensor_values();
-    HAL_Delay(1000);
+    HAL_Delay(CHATTERING_WAIT);    
+    while((READ_SW0 & READ_SW1 & READ_SW2));
+
+    if(READ_SW0 == SW_ON){
+    
+      TOGGLE_LED3;
+    
+    }else if(READ_SW1 == SW_ON){
+
+      TOGGLE_LED2;
+ 
+    }else if(READ_SW2 == SW_ON){
+
+      TOGGLE_LED1;
+
+    }
 
     /* USER CODE END WHILE */
 
@@ -175,7 +205,6 @@ int main(void)
     // TODO: Toggle the LED every second.
     if(!BATT_LEVEL) LED0_OFF;
   }
-  // HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
   /* USER CODE END 3 */
 }
 

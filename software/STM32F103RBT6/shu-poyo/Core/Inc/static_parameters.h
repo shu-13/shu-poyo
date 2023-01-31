@@ -17,11 +17,22 @@
 #define TOGGLE_LED1 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
 #define TOGGLE_LED2 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_12);
 #define TOGGLE_LED3 HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+#define LED0_ON HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
+#define LED0_OFF HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 0);
+#define LED1_ON HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, 1);
+#define LED1_OFF HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, 0);
+#define LED2_ON HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, 1);
+#define LED2_OFF HAL_GPIO_WritePin(GPIOC, GPIO_PIN_12, 0);
+#define LED3_ON HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
+#define LED3_OFF HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 0);
 
 // Switches
-#define READ_SW0 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7);
-#define READ_SW1 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
-#define READ_SW2 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9);
+#define READ_SW0 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7)
+#define READ_SW1 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8)
+#define READ_SW2 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9)
+
+#define SW_ON (0)
+#define SW_OFF (1)
 
 // Light sensor - Emmit
 #define SENSOR_OUT_R_ON HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, 1);
@@ -34,7 +45,7 @@
 #define SENSOR_OUT_L_OFF HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, 0);
 
 // Ligh sensor - Collect
-// #define SENSOR_IN_R_ON
+// These are defined in sensors.h
 
 // Motors
 // Sets the motor mode to PHASE/ENABLE
