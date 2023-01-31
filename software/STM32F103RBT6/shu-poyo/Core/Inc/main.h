@@ -57,6 +57,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 int __io_putchar(int ch);
+void exec_mode(int mode);
 
 /* USER CODE END EFP */
 

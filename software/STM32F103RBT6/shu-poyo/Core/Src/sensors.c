@@ -27,7 +27,12 @@ void get_sensor_values(void){
 }
 
 void sensors_init(void){
-    // hoge
+    st_sen[DIST_SEN_R].s_ref = SEN_REF_R;
+    st_sen[DIST_SEN_FR].s_ref = SEN_REF_FR;
+    st_sen[DIST_SEN_FL].s_ref = SEN_REF_FL;
+    st_sen[DIST_SEN_L].s_ref = SEN_REF_L;
+    
+    printf("Initiated sensor params... \n\r");
 }
 
 void read_sensor_R(void){
