@@ -26,6 +26,7 @@
 #include "run.h"
 #include "global_var.h"
 #include "sensors.h"
+#include "adc_batt.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -153,7 +154,7 @@ int main(void)
   // Start TIM4
   HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
+  LED0_ON;
   printf("Initiated! \n\r");
   /* USER CODE END 2 */
 
@@ -171,6 +172,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // TODO: Toggle the LED every second.
+    if(!BATT_LEVEL) LED0_OFF;
   }
   // HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2); // Stop PWM
   /* USER CODE END 3 */

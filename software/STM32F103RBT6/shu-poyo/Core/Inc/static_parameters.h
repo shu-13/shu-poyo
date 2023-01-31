@@ -3,6 +3,9 @@
 
 #include "stm32f1xx_hal.h"
 
+// Battery
+#define BATT_MIN (100)
+
 // Buzzer
 #define BUZZER_LO_ON HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
 #define BUZZER_LO_OFF HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
