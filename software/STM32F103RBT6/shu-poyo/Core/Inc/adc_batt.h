@@ -6,5 +6,6 @@
 
 uint16_t BATT_LEVEL;
 void check_batt(void);
+void get_batt_level(void);
 
 #endif /* __ADC_BATT_H */

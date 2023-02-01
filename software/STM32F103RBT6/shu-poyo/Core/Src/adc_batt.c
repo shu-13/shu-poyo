@@ -17,3 +17,8 @@ void check_batt(void){
         BATT_LEVEL = 1;
     }
 }
+
+void get_batt_level(void){
+    printf("BATT_LEVEL: %4d \n\r", batt_val);
+    printf("========== \n\r");
+}
