@@ -7,8 +7,12 @@
 #define CHATTERING_WAIT (50)
 
 // wheel params
-#define WHEEL_D     (25)
-#define TREAD_DIST  (30)
+#define WHEEL_DIAMETER      (25)
+#define TREAD_WIDTH         (30)
+
+// Run parameters
+#define SEARCH_SPEED (100)  // This is pulse. MAX is 360
+#define SEARCH_ACCEL (1.5)
 
 // sensor ref values
 #define SEN_REF_R   (100)
