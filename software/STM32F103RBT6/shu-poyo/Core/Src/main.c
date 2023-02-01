@@ -83,6 +83,24 @@ int __io_putchar(int ch){
   return ch;
 }
 
+void mode_LED(int mode){
+  if(mode&0x01){
+    LED1_ON;
+  }else{
+    LED1_OFF;
+  }
+  if((mode>>1)&0x01){
+    LED2_ON;
+  }else{
+    LED2_OFF;
+  }
+  if((mode>>2)&0x01){
+    LED3_ON;
+  }else{
+    LED3_OFF;
+  }
+}
+//TODO: Put these two functions in a different file
 uint16_t read_left_encoder(void){
   uint16_t enc_buff = TIM2->CNT;
   TIM2->CNT = 0;
@@ -105,9 +123,18 @@ void exec_mode(int mode){
       break;
     case 3:
       break;
+    case 4:
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    case 7:
+      break;
   }
 
   // probably turn the motor off?
+  stop_motors();
 }
 /* USER CODE END 0 */
 
@@ -150,15 +177,17 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // Printf thing
   setbuf(stdout, NULL);
+  int mode;
   // Buzzer things
   BUZZER_LO_OFF;
   BUZZER_HI_OFF;
   // Motor settings
   MOTOR_MODE_SET_PE;
+  stop_motors();
+  // TODO: You might not need to set this here
   MOTORL_FORWARD;	// Motor L Rotation direction
   MOTORR_FORWARD;	// Motor R Rotation direction
-  HAL_TIM_PWM_Start(&htim1, MOTORL_CH2);	// Start PWM output
-  HAL_TIM_PWM_Start(&htim1, MOTORR_CH2);  // Start PWM output
+  // TODO: Start the counter in each modes or run functions
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
   // Turn off the sensor
@@ -173,6 +202,7 @@ int main(void)
   // Turns LED0 ON!
   LED0_ON;
   printf("Initiated! \n\r");
+  mode = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -185,25 +215,34 @@ int main(void)
     HAL_Delay(CHATTERING_WAIT);    
     while((READ_SW0 & READ_SW1 & READ_SW2));
 
+    printf("Current mode is %d \n\r", mode);
+    mode_LED(mode);
+
     if(READ_SW0 == SW_ON){
-    
-      TOGGLE_LED3;
+
+      mode--;
+      if(mode < 1){
+        mode = 1;
+      }
     
     }else if(READ_SW1 == SW_ON){
 
-      TOGGLE_LED2;
+      exec_mode(mode);
  
     }else if(READ_SW2 == SW_ON){
 
-      TOGGLE_LED1;
+      mode++;
+      if(mode > 7){
+        mode = 7;
+      }
 
     }
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // TODO: Toggle the LED every second.
-    if(!BATT_LEVEL) LED0_OFF;
+    // TODO: Toggle the LED every second. it might be good to add this in adc_batt.c
+    // if(!BATT_LEVEL) LED0_OFF;
   }
   /* USER CODE END 3 */
 }
