@@ -5,18 +5,7 @@
 #include "global_var.h"
 
 extern ADC_HandleTypeDef hadc1;
-
-typedef struct{
-    uint16_t s_offset;      // The sensor value (LED OFF)
-    uint16_t s_cur;         // The current sensor value (LED ON)
-    uint16_t s_prev;        // The previous sensor value (LED ON)
-    uint16_t s_limit;       // The sensors limit, AKA the value when its near the wall
-    uint16_t s_ref;         // The sensors reference value
-    uint16_t s_ctrl;        // Toggle for sensor control
-    uint16_t s_noctrl;      // Toggle for non-sensor control
-}stDIST_SEN;
-
-stDIST_SEN st_sen[DIST_SEN_NUM];
+extern stDIST_SEN st_sen[DIST_SEN_NUM];
 
 void get_sensor_values(void){
     printf("R: %4d \n\r", st_sen[DIST_SEN_R].s_cur);
