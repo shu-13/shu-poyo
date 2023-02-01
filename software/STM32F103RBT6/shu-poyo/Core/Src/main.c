@@ -22,11 +22,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "parameters.h"
-#include "run.h"
 #include "global_var.h"
-#include "sensors.h"
+#include "parameters.h"
+
 #include "adc_batt.h"
+#include "motors.h"
+#include "sensors.h"
+
+#include "run.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -190,19 +193,14 @@ int main(void)
   // TODO: Start the counter in each modes or run functions
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
-  // Turn off the sensor
-  SENSOR_OUT_R_OFF;
-  SENSOR_OUT_FR_OFF; 
-  SENSOR_OUT_FL_OFF;
-  SENSOR_OUT_L_OFF;
   // Initiate the parameters
   sensors_init();
   // Start TIM4
   HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!
   LED0_ON;
-  printf("Initiated! \n\r");
   mode = 1;
+  printf("Initiated! \n\r");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -218,8 +216,9 @@ int main(void)
     printf("Current mode is %d \n\r", mode);
     mode_LED(mode);
 
-    if(READ_SW0 == SW_ON){
-
+    if(READ_SW2 == SW_ON){
+      // Decrease the mode
+      // Making sure it doesn't go below 1
       mode--;
       if(mode < 1){
         mode = 1;
@@ -229,8 +228,9 @@ int main(void)
 
       exec_mode(mode);
  
-    }else if(READ_SW2 == SW_ON){
-
+    }else if(READ_SW0 == SW_ON){
+      // Increase the mode
+      // Making sure it doesn't go above 7
       mode++;
       if(mode > 7){
         mode = 7;

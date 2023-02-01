@@ -16,6 +16,12 @@ void get_sensor_values(void){
 }
 
 void sensors_init(void){
+    // Turn off the sensor
+    SENSOR_OUT_R_OFF;
+    SENSOR_OUT_FR_OFF; 
+    SENSOR_OUT_FL_OFF;
+    SENSOR_OUT_L_OFF;
+
     st_sen[DIST_SEN_R].s_ref = SEN_REF_R;
     st_sen[DIST_SEN_FR].s_ref = SEN_REF_FR;
     st_sen[DIST_SEN_FL].s_ref = SEN_REF_FL;
