@@ -3,8 +3,11 @@
 
 #include "stm32f1xx_hal.h"
 
+// System
+#define SYSCLOCK_HZ (36000000)
+
 // Battery
-#define BATT_MIN (100)
+#define BATT_MIN (2700) // About 5.4V
 
 // Buzzer
 #define BUZZER_LO_ON HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
@@ -56,6 +59,11 @@
 #define MOTORL_BACK HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, 1);
 #define MOTORR_CH2 TIM_CHANNEL_4
 #define MOTORL_CH2 TIM_CHANNEL_2
+#define MOTOR_PWM_FREQ (100000)
+#define MOTOR_PRESCALER (1)
+#define MOTOR_COUNTER_PERIOD (SYSCLOCK_HZ / (MOTOR_PWM_FREQ * MOTOR_PRESCALER))
+#define MIN_DUTY_RATE (0.05)  // Sets the minimum duty rate to 5%
+#define MIN_SPEED_PULSE (MOTOR_COUNTER_PERIOD * MIN_DUTY_RATE)
 
 // Encoder
 
