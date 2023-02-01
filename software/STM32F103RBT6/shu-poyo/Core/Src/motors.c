@@ -23,8 +23,8 @@ void start_motors(void){
 // The PWF frequency and prescalers are
 // set beforehand.
 float calc_pulse(double duty){
-    duty = duty_rate;
-    return (duty_rate * MOTOR_COUNTER_PERIOD) / 100;
+    duty_rate = duty;
+    return (duty_rate * MOTOR_COUNTER_PERIOD) / 100.0;
 }
 
 void motor_control(void){
