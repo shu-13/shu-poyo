@@ -2,7 +2,7 @@
 #ifndef __TYPEDEF_H
 #define __TYPEDEF_H
 
-/* The structure for the sensor values */
+/* structure for the sensor values */
 typedef struct{
     uint16_t s_offset;      // The sensor value (LED OFF)
     uint16_t s_cur;         // The current sensor value (LED ON)
@@ -13,7 +13,15 @@ typedef struct{
     uint16_t s_noctrl;      // Toggle for non-sensor control
 }stDIST_SEN;
 
-/* The enum for the robot's direction */
+/* Structure for the encoder values */
+typedef struct{
+    uint16_t e_cur;         // The current encoder value
+    uint16_t e_prev;        // The previous encoder value
+    uint16_t travel_dist;   // The distance travelled
+}stENCODER_DATA;
+
+
+/* enum for the robot's direction */
 typedef enum{
     FRONT=0,
     RIGHT,
