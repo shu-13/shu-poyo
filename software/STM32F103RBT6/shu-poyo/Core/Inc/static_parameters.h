@@ -3,8 +3,17 @@
 
 #include "stm32f1xx_hal.h"
 
+// Maze info
+#define SECTION_LEN (180) // in mm
+#define HALF_SECTION (SECTION_LEN / 2) // in mm
+#define MAZE_SIZE_X (3)
+#define MAZE_SIZE_Y (3)
+#define GOAL_X      (2)
+#define GOAL_Y      (2)
+
 // System
 #define SYSCLOCK_HZ (36000000)
+#define PI  (3.14159265359)
 
 // Battery
 #define BATT_MIN (2700) // About 5.4V
