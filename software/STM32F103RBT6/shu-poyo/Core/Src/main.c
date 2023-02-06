@@ -183,6 +183,7 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
   // Initiate the parameters
   sensors_init();
+  motor_encode_init();
   // Start TIM4
   HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!

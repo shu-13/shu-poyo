@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "sensors.h"
 #include "adc_batt.h"
+#include "motors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -213,8 +214,9 @@ void TIM4_IRQHandler(void)
   read_sensor_FR(); for(int i=0; i<100; i++);
   read_sensor_L(); for(int i=0; i<100; i++);
   // Check the battery value
-  check_batt(); for(int i=0; i<100; i++);
-  // Calls a function from the motors.c, encoder_update
+  check_batt(); for(int i=0; i<100; i++); 
+  // Update the traveled distance
+  encoder_update(); for(int i=0; i<100; i++);
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */

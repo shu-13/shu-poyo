@@ -16,9 +16,11 @@ stENCODER_DATA st_right_enc_data;
 void motor_encode_init(void){
     st_left_enc_data.e_cur = 0.0;
     st_left_enc_data.e_prev = 0.0;
+    st_left_enc_data.dist_buff = 0.0;
     st_left_enc_data.travel_dist = 0.0;
     st_right_enc_data.e_cur = 0.0;
     st_right_enc_data.e_prev = 0.0;
+    st_right_enc_data.dist_buff = 0.0;
     st_right_enc_data.travel_dist = 0.0;
 }
 
@@ -97,8 +99,13 @@ void encoder_update(void){
     st_left_enc_data.e_cur = read_left_encoder();
     st_right_enc_data.e_cur = read_right_encoder();
 
-    st_left_enc_data.travel_dist += calc_dist(st_left_enc_data.e_cur, st_left_enc_data.e_prev);    
-    st_right_enc_data.travel_dist += calc_dist(st_right_enc_data.e_cur, st_right_enc_data.e_prev);
+    // Calculates the travelled distance in 1ms
+    st_left_enc_data.dist_buff = calc_dist(st_left_enc_data.e_cur, st_left_enc_data.e_prev);    
+    st_right_enc_data.dist_buff = calc_dist(st_right_enc_data.e_cur, st_right_enc_data.e_prev);
+
+    // Sums up the travelled distance
+    st_left_enc_data.travel_dist += st_left_enc_data.dist_buff;
+    st_right_enc_data.travel_dist += st_right_enc_data.dist_buff;
 
     st_left_enc_data.e_prev = st_left_enc_data.e_cur;
     st_right_enc_data.e_prev = st_right_enc_data.e_cur;
