@@ -68,11 +68,17 @@
 #define MOTORL_BACK HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, 1);
 #define MOTORR_CH2 TIM_CHANNEL_4
 #define MOTORL_CH2 TIM_CHANNEL_2
+// PWM values
 #define MOTOR_PWM_FREQ (100000)
 #define MOTOR_PRESCALER (1)
 #define MOTOR_COUNTER_PERIOD (SYSCLOCK_HZ / (MOTOR_PWM_FREQ * MOTOR_PRESCALER))
 #define MIN_DUTY_RATE (0.05)  // Sets the minimum duty rate to 5%
 #define MIN_SPEED_PULSE (MOTOR_COUNTER_PERIOD * MIN_DUTY_RATE)
+#define MIN_SPEED (100) // TODO: Calculate this value from the pulse?
+// Gear related variables
+#define PINION_GEAR_TEETH (14)
+#define WHEEL_GEAR_TEETH (45)
+#define GEAR_RATIO (PINION_GEAR_TEETH / WHEEL_GEAR_TEETH)
 
 // Encoder
 
