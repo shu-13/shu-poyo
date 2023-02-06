@@ -1,8 +1,13 @@
 // Running functions for shu-poyo
 
 #include "run.h"
+#include "motors.h"
 #include "global_var.h"
 #include "parameters.h"
+
+// From the main.c
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
 
 // From the motor.c
 extern stENCODER_DATA st_left_enc_data;
@@ -71,6 +76,8 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     accel = (-1) * max_acc;
     while(st_left_enc_data.travel_dist < length);
 
+    // Reseting the encoder
+    clear_encoder(htim2); clear_encoder(htim3);
 }
 
 void turn(float length, float max_acc, float init_sp, float max_sp, float tar_sp){

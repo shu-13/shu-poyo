@@ -9,6 +9,7 @@ extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 
+// Structures
 stENCODER_DATA st_left_enc_data;
 stENCODER_DATA st_right_enc_data;
 
@@ -22,6 +23,8 @@ void motor_encode_init(void){
     st_right_enc_data.e_prev = 0.0;
     st_right_enc_data.dist_buff = 0.0;
     st_right_enc_data.travel_dist = 0.0;
+
+    clear_encoder(htim2); clear_encoder(htim3);
 }
 
 
@@ -67,17 +70,21 @@ void speed_update(void){//1ms割り込みで実行
 } 
 
 /* ENCODER RELATED FUNCTIONS */
+void clear_encoder(TIM_HandleTypeDef htim){
+    htim.Instance->CNT = 0;
+}
+
 uint16_t read_left_encoder(void){
     // Do you need to clear the count???
     uint16_t enc_buff = htim2.Instance->CNT;
-    htim2.Instance->CNT = 0;
+    // htim2.Instance->CNT = 0;
     return enc_buff;
 }
 
 uint16_t read_right_encoder(void){
     // Do you need to clear the count???
     uint16_t enc_buff = htim3.Instance->CNT;
-    htim3.Instance->CNT = 0;
+    // htim3.Instance->CNT = 0;
     return enc_buff;
 }
 
