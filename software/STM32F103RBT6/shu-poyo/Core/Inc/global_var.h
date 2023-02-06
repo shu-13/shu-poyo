@@ -29,8 +29,8 @@ enum enMAP_HEAD_DIR{
 
 /* Speed and accelerations */
 double duty_rate;   // in %
-float speed;    // the robot's speed in pulses
-float min_speed, max_speed; // min and max speed in pulses
-float accel, r_accel;   // acceleration and rotation acceleration
+float speed;    // the robot's speed in mm/s
+float min_speed, max_speed; // min and max speed in mm/s
+float accel, r_accel;   // acceleration and rotation acceleration in mm/s/s
 
 #endif /* __GLOBAL__VAR_H */

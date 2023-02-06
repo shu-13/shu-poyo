@@ -13,7 +13,7 @@ float calc_pulse(double duty);
 /* Encoder controls */
 uint16_t read_left_encoder(void);
 uint16_t read_right_encoder(void);
-void calc_dist(void);
+float calc_dist(uint16_t cur, uint16_t prev);
 void encoder_update(void);
 
 

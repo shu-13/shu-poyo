@@ -17,7 +17,7 @@ typedef struct{
 typedef struct{
     uint16_t e_cur;         // The current encoder value
     uint16_t e_prev;        // The previous encoder value
-    uint16_t travel_dist;   // The distance travelled
+    float travel_dist;   // The distance travelled in mm
 }stENCODER_DATA;
 
 
