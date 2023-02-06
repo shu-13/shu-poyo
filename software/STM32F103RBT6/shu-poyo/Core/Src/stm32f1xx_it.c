@@ -207,33 +207,18 @@ void SysTick_Handler(void)
 void TIM4_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM4_IRQn 0 */
-  static char num=0;
-  switch(num){
-    case 0:
-      read_sensor_R();
-      num++;
-      break;
-    case 1:
-      read_sensor_FL();
-      num++;
-      break;
-    case 2:
-      read_sensor_FR();
-      num++;
-      break;
-    case 3:
-      read_sensor_L();
-      num++;
-      break;
-    case 4:
-      check_batt();
-      num = 0;
-      break;
-  }
+  // Read the sensor values
+  read_sensor_R(); for(int i=0; i<100; i++);
+  read_sensor_FL(); for(int i=0; i<100; i++);
+  read_sensor_FR(); for(int i=0; i<100; i++);
+  read_sensor_L(); for(int i=0; i<100; i++);
+  // Check the battery value
+  check_batt(); for(int i=0; i<100; i++);
+  // Calls a function from the motors.c, encoder_update
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */
-
+  // Calls a function from the motors.c, speed_update
   /* USER CODE END TIM4_IRQn 1 */
 }
 
