@@ -103,18 +103,6 @@ void mode_LED(int mode){
     LED3_OFF;
   }
 }
-//TODO: Put these two functions in a different file
-uint16_t read_left_encoder(void){
-  uint16_t enc_buff = TIM2->CNT;
-  TIM2->CNT = 0;
-  return enc_buff;
-}
-
-uint16_t read_right_encoder(void){
-  uint16_t enc_buff = TIM3->CNT;
-  TIM3->CNT = 0;
-  return enc_buff;
-}
 
 void exec_mode(int mode){
   //wait a bit?
@@ -180,7 +168,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   // Printf thing
   setbuf(stdout, NULL);
-  int mode;
+  int mode = 1;
   // Buzzer things
   BUZZER_LO_OFF;
   BUZZER_HI_OFF;
@@ -199,7 +187,6 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!
   LED0_ON;
-  mode = 1;
   printf("Initiated! \n\r");
   /* USER CODE END 2 */
 
@@ -213,16 +200,14 @@ int main(void)
     HAL_Delay(CHATTERING_WAIT);    
     while((READ_SW0 & READ_SW1 & READ_SW2));
 
-    printf("Current mode is %d \n\r", mode);
     mode_LED(mode);
+    printf("Current mode is %d \n\r", mode);
 
     if(READ_SW2 == SW_ON){
       // Decrease the mode
       // Making sure it doesn't go below 1
       mode--;
-      if(mode < 1){
-        mode = 1;
-      }
+      if(mode < 1) mode = 1;
     
     }else if(READ_SW1 == SW_ON){
 
@@ -232,9 +217,7 @@ int main(void)
       // Increase the mode
       // Making sure it doesn't go above 7
       mode++;
-      if(mode > 7){
-        mode = 7;
-      }
+      if(mode > 7) mode = 7;
 
     }
 
