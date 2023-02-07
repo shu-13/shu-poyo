@@ -16,6 +16,12 @@
 #define SEARCH_SPEED (100)  // This is pulse. MAX is 360
 #define SEARCH_ACCEL (1.5)
 
+// PID control things
+#define K_P     (1.0)
+#define K_I     (0.0)
+#define K_D     (0.0)
+#define FF_GAIN (0.0)
+
 // sensor ref values
 #define SEN_REF_R   (100)
 #define SEN_REF_FR  (100)

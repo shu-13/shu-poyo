@@ -52,21 +52,28 @@ void motor_control(void){
 // You might not need this
 }
 
-void speed_update(void){//1ms割り込みで実行
-/*
-    targetspeed += accel*0.001; //1ms update
-    // nowspeed is the mouse's speed
-    // Calculated from the encoder's value
-    err_sum += (targetspeed -nowspeed);
+void speed_update(void){
+    // 1ms割り込みで実行
+    // goal_speed is the target speed
+    goal_speed += accel * 0.001; // Updates speed every 1ms
+    
+    // the difference between the goal and current speed
+    err_speed = goal_speed - enc_speed;
+    err_sum += err_speed;
 
+    v_PID = err_speed*K_P + err_sum*K_I + (prev_speed - err_speed)*K_D; 
+    
+    // Update the prev_speed
+    prev_speed = err_speed;
 
-    v_PID = (targetspeed - nowspeed)*Kp+err_sum*Ki+(old_speed-(targetspeed - nowspeed))*Kd;
-    old_speed = targetspeed - nowspeed;
+    duty_rate = FF_GAIN + v_PID;
 
-    duty = ff_gain + vPID;
-    __HAL_TIM_SET_COMPARE(htim1, CH, MOTOR_COUNTER_PERIOD*duty*0.01)
-*/
-
+    // if(RUN_MODE == straight){
+        MOTORR_FORWARD; MOTORL_FORWARD;
+        
+        __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
+        __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
+    // }
 } 
 
 /* ENCODER RELATED FUNCTIONS */
@@ -109,11 +116,14 @@ void encoder_update(void){
     // Calculates the travelled distance in 1ms
     st_left_enc_data.dist_buff = calc_dist(st_left_enc_data.e_cur, st_left_enc_data.e_prev);    
     st_right_enc_data.dist_buff = calc_dist(st_right_enc_data.e_cur, st_right_enc_data.e_prev);
+    // Calculates the speed based off of the encoder value
+    enc_speed = st_left_enc_data.dist_buff * 0.001; // in mm/s
 
     // Sums up the travelled distance
     st_left_enc_data.travel_dist += st_left_enc_data.dist_buff;
     st_right_enc_data.travel_dist += st_right_enc_data.dist_buff;
 
+    // Saves the current data
     st_left_enc_data.e_prev = st_left_enc_data.e_cur;
     st_right_enc_data.e_prev = st_right_enc_data.e_cur;
 }

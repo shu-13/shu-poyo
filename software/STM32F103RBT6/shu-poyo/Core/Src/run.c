@@ -41,9 +41,9 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     // Checks if the initial speed is bigger than the minimum
     // Also sets the speed value
     if(init_sp < MIN_SPEED){
-        speed = MIN_SPEED;
+        init_speed = MIN_SPEED;
     }else{
-        speed = init_sp;
+        init_speed = init_sp;
     }
     // Checks if the target is bigger than the minimum speed
     if(tar_sp < MIN_SPEED){
@@ -56,14 +56,15 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
         min_speed = tar_sp;
     }
 
-    // The travelling distance to reach the maximum speed
-    float ref_dist_inc = 1 / 2 * accel * ((max_speed - speed) / accel)*((max_speed - speed) / accel);
-    // The travelling distance to reach the target speed
+    // The travelling distance to reach the maximum speed (at the beginning of the length)
+    float ref_dist_inc = 1 / 2 * accel * ((max_speed - init_speed) / accel)*((max_speed - init_speed) / accel);
+    // The travelling distance to reach the target speed (towards the end of the length)
     float ref_dist_dec = 1 / 2 * accel * ((max_speed - min_speed) / accel)*((max_speed - min_speed) / accel);
 
     MOTORR_FORWARD; MOTORL_FORWARD;
-
+    
     // TODO: Fix this. You should use the right one too, right?
+    goal_speed = max_speed;
     while(st_left_enc_data.travel_dist < ref_dist_inc);
 
     // This is when the speed is consistant
@@ -73,6 +74,7 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     
     // This is when the speed is decreasing
     // TODO: Fix this.
+    goal_speed = min_speed;
     accel = (-1) * max_acc;
     while(st_left_enc_data.travel_dist < length);
 
