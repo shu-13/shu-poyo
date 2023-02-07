@@ -22,7 +22,7 @@ typedef struct{
 }stENCODER_DATA;
 
 
-/* enum for the robot's direction */
+/* enum for the robot's next direction */
 typedef enum{
     FRONT=0,
     RIGHT,

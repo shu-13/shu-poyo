@@ -105,7 +105,9 @@ void mode_LED(int mode){
 }
 
 void exec_mode(int mode){
-  //wait a bit?
+  HAL_Delay(500);
+  start_motors();
+  HAL_Delay(500);
 
   switch(mode){
     case 1:
@@ -115,6 +117,7 @@ void exec_mode(int mode){
     case 3:
       break;
     case 4:
+      straight(HALF_SECTION, SEARCH_ACCEL, 0, SEARCH_SPEED, 0);
       break;
     case 5:
       break;
@@ -176,8 +179,8 @@ int main(void)
   MOTOR_MODE_SET_PE;
   stop_motors();
   // TODO: You might not need to set this here
-  MOTORL_FORWARD;	// Motor L Rotation direction
-  MOTORR_FORWARD;	// Motor R Rotation direction
+  // MOTORL_FORWARD;	// Motor L Rotation direction
+  // MOTORR_FORWARD;	// Motor R Rotation direction
   // TODO: Start the counter in each modes or run functions
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
