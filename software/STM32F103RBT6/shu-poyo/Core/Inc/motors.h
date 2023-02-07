@@ -7,7 +7,7 @@ void motor_encode_init(void);
 /* Motor controls */
 void stop_motors(void);
 void start_motors(void);
-void motor_control(void);
+void speed_update(void);
 float calc_pulse(double duty);
 
 /* Encoder controls */
