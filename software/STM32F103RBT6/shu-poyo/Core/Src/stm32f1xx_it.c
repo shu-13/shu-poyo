@@ -220,7 +220,7 @@ void TIM4_IRQHandler(void)
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */
-  // Calls a function from the motors.c, speed_update
+  speed_update(); for(int i=0; i<100; i++);
   /* USER CODE END TIM4_IRQn 1 */
 }
 
