@@ -15,6 +15,8 @@ stENCODER_DATA st_right_enc_data;
 
 /* INIT FUNCTION */
 void motor_encode_init(void){
+    duty_rate = 0.0;
+
     st_left_enc_data.e_cur = 0.0;
     st_left_enc_data.e_prev = 0.0;
     st_left_enc_data.dist_buff = 0.0;
