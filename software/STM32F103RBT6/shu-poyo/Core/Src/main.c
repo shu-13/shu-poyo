@@ -178,9 +178,6 @@ int main(void)
   // Motor settings
   MOTOR_MODE_SET_PE;
   stop_motors();
-  // TODO: You might not need to set this here
-  // MOTORL_FORWARD;	// Motor L Rotation direction
-  // MOTORR_FORWARD;	// Motor R Rotation direction
   // TODO: Start the counter in each modes or run functions
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
@@ -201,11 +198,11 @@ int main(void)
     HAL_Delay(CHATTERING_WAIT);
     while(!(READ_SW0 & READ_SW1 & READ_SW2));
 
-    HAL_Delay(CHATTERING_WAIT);    
-    while((READ_SW0 & READ_SW1 & READ_SW2));
-
     mode_LED(mode);
     printf("Current mode is %d \n\r", mode);
+
+    HAL_Delay(CHATTERING_WAIT);    
+    while((READ_SW0 & READ_SW1 & READ_SW2));
 
     // DEBUG
     // start_motors();
@@ -234,6 +231,9 @@ int main(void)
 
     }
 
+    start_motors();
+    straight(HALF_SECTION, SEARCH_ACCEL, 0, SEARCH_SPEED, 0);
+    stop_motors();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
