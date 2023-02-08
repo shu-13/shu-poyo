@@ -57,9 +57,9 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     }
 
     // The travelling distance to reach the maximum speed (at the beginning of the length)
-    float ref_dist_inc = 1 / 2 * accel * ((max_speed - init_speed) / accel)*((max_speed - init_speed) / accel);
+    float ref_dist_inc = 1.0 / 2.0 * accel * ((max_speed - init_speed) / accel)*((max_speed - init_speed) / accel);
     // The travelling distance to reach the target speed (towards the end of the length)
-    float ref_dist_dec = 1 / 2 * accel * ((max_speed - min_speed) / accel)*((max_speed - min_speed) / accel);
+    float ref_dist_dec = 1.0 / 2.0 * accel * ((max_speed - min_speed) / accel)*((max_speed - min_speed) / accel);
 
     MOTORR_FORWARD; MOTORL_FORWARD;
     
