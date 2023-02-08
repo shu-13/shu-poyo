@@ -28,7 +28,7 @@ enum enMAP_HEAD_DIR{
 };
 
 /* Speed and accelerations */
-double duty_rate;   // in %
+double duty_rate;       // in %
 float init_speed;       // the robot's speed when it starts to run in mm/s
 float enc_speed;        // the robot's speed based on the encoder value
 float prev_speed;       // the robot's previous speed (at -1ms)
