@@ -70,7 +70,7 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     // This is when the speed is consistant
     // TODO: Fix this.
     accel = 0.0;
-    while(st_left_enc_data.travel_dist < length - (ref_dist_inc + ref_dist_dec));
+    while(st_left_enc_data.travel_dist < length - ref_dist_dec);
     
     // This is when the speed is decreasing
     // TODO: Fix this.

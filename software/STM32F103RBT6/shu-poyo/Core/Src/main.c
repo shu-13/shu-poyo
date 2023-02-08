@@ -232,7 +232,7 @@ int main(void)
     }
 
     start_motors();
-    straight(HALF_SECTION, SEARCH_ACCEL, 0, SEARCH_SPEED, 0);
+    straight(HALF_SECTION, SEARCH_ACCEL, 0.0, SEARCH_SPEED, 0.0);
     stop_motors();
     /* USER CODE END WHILE */
 
