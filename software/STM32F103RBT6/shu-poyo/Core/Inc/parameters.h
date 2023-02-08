@@ -13,8 +13,8 @@
 
 
 // Run parameters
-#define SEARCH_SPEED (100)  // This is pulse. MAX is 360
-#define SEARCH_ACCEL (1.5)
+#define SEARCH_SPEED (200)  // [mm/s]
+#define SEARCH_ACCEL (1000) // [mm/s/s]
 
 // PID control things
 #define K_P     (1.0)
