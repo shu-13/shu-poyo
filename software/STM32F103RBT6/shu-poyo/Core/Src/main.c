@@ -199,27 +199,18 @@ int main(void)
     while(!(READ_SW0 & READ_SW1 & READ_SW2));
 
     mode_LED(mode);
-    printf("Current mode is %d \n\r", mode);
 
     HAL_Delay(CHATTERING_WAIT);    
     while((READ_SW0 & READ_SW1 & READ_SW2));
-
-    // DEBUG
-    // start_motors();
-    // test_run_forward(&htim1);
-    // stop_motors();
-    // DEBUG
 
     if(READ_SW2 == SW_ON){
       // Decrease the mode
       // Making sure it doesn't go below 1
       mode--;
       if(mode < 1) mode = 1;
-      printf("SW2: Mode is %d \n\r", mode);
     
     }else if(READ_SW1 == SW_ON){
 
-      printf("SW1: Mode is %d \n\r", mode);
       exec_mode(mode);
  
     }else if(READ_SW0 == SW_ON){
@@ -227,7 +218,6 @@ int main(void)
       // Making sure it doesn't go above 7
       mode++;
       if(mode > 7) mode = 7;
-      printf("SW0: Mode is %d \n\r", mode);
 
     }
 
