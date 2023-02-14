@@ -13,6 +13,9 @@ extern TIM_HandleTypeDef htim3;
 stENCODER_DATA st_left_enc_data;
 stENCODER_DATA st_right_enc_data;
 
+// Proto types
+void clear_encoder(TIM_HandleTypeDef);
+
 /* INIT FUNCTION */
 void motor_encode_init(void){
     duty_rate = 0.0;
@@ -48,10 +51,6 @@ float calc_pulse(double duty){
     // The PWF frequency and prescalers are set beforehand.
     duty_rate = duty;
     return (duty_rate * MOTOR_COUNTER_PERIOD) / 100.0;
-}
-
-void motor_control(void){
-// You might not need this
 }
 
 void speed_update(void){
