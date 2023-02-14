@@ -75,7 +75,7 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     // This is when the speed is decreasing
     // TODO: Fix this.
     goal_speed = min_speed;
-    accel = (-1) * max_acc;
+    accel = (-1.0) * max_acc;
     while(st_left_enc_data.travel_dist < length);
 
     // Reseting the encoder
