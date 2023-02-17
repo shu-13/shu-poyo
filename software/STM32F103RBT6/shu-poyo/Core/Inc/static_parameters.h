@@ -62,10 +62,10 @@
 // Motors
 // Sets the motor mode to PHASE/ENABLE
 #define MOTOR_MODE_SET_PE HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, 1);
-#define MOTORR_FORWARD HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, 1);
-#define MOTORR_BACK HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, 0);
-#define MOTORL_FORWARD HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, 0);
-#define MOTORL_BACK HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, 1);
+#define MOTORR_FORWARD HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, 0);
+#define MOTORR_BACK HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, 1);
+#define MOTORL_FORWARD HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, 1);
+#define MOTORL_BACK HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, 0);
 #define MOTORR_CH2 TIM_CHANNEL_4
 #define MOTORL_CH2 TIM_CHANNEL_2
 // PWM values
@@ -74,14 +74,14 @@
 #define MOTOR_COUNTER_PERIOD (SYSCLOCK_HZ / (MOTOR_PWM_FREQ * MOTOR_PRESCALER))
 #define MIN_DUTY_RATE (0.05)  // Sets the minimum duty rate to 5%
 #define MIN_SPEED_PULSE (MOTOR_COUNTER_PERIOD * MIN_DUTY_RATE)
-#define MIN_SPEED (100) // TODO: Calculate this value from the pulse?
+#define MIN_SPEED (0) // TODO: Calculate this value from the pulse?
 // Gear related variables
-#define PINION_GEAR_TEETH (14)
-#define WHEEL_GEAR_TEETH (45)
+#define PINION_GEAR_TEETH (14.0)
+#define WHEEL_GEAR_TEETH (45.0)
 #define GEAR_RATIO (PINION_GEAR_TEETH / WHEEL_GEAR_TEETH)
 
 // Encoder
-
+#define PULSES_PER_ROTATE (4096.0)      // The amount of pulses per rotation
 
 #define __STATIC_PARAMETERS_H
 
