@@ -4,6 +4,9 @@
 
 #include "stm32f1xx_hal.h"
 
+// Init function
+void speed_val_init(void);
+
 // TEST functions
 void test_run_forward(TIM_HandleTypeDef *htim);
 

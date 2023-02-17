@@ -13,6 +13,21 @@ extern TIM_HandleTypeDef htim3;
 extern stENCODER_DATA st_left_enc_data;
 extern stENCODER_DATA st_right_enc_data;
 
+void speed_val_init(void){
+    init_speed = 0.0;
+
+    prev_speed = 0.0;
+    min_speed = 0.0;
+    max_speed = 0.0;
+    goal_speed = 0.0;
+    accel = 0.0;
+    r_accel = 0.0;
+
+    err_speed = 0.0;
+    err_sum = 0.0;
+    v_PID = 0.0;
+}
+
 void test_run_forward(TIM_HandleTypeDef *htim){
     // Sets the pulse for the duty ratio. 
     // The pulse's maximum value = Counter Period
@@ -33,6 +48,7 @@ void test_run_forward(TIM_HandleTypeDef *htim){
 }
 
 void straight(float length, float max_acc, float init_sp, float max_sp, float tar_sp){
+    speed_val_init();
     // Stores the maximum speed
     // This is used in the function used in the timer
     max_speed = max_sp;
@@ -57,29 +73,31 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     }
 
     // The travelling distance to reach the maximum speed (at the beginning of the length)
-    float ref_dist_inc = 1.0 / 2.0 * accel * ((max_speed - init_speed) / accel)*((max_speed - init_speed) / accel);
+    float ref_dist_inc = 0.5 * accel * ((max_speed - init_speed) / accel)*((max_speed - init_speed) / accel);
     // The travelling distance to reach the target speed (towards the end of the length)
-    float ref_dist_dec = 1.0 / 2.0 * accel * ((max_speed - min_speed) / accel)*((max_speed - min_speed) / accel);
+    float ref_dist_dec = 0.5 * accel * ((max_speed - min_speed) / accel)*((max_speed - min_speed) / accel);
 
     MOTORR_FORWARD; MOTORL_FORWARD;
-    
-    // TODO: Fix this. You should use the right one too, right?
+
+    // This is when the speed is increasing
     goal_speed = max_speed;
-    while(st_left_enc_data.travel_dist < ref_dist_inc);
+    while(0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist) < ref_dist_inc);
 
     // This is when the speed is consistant
-    // TODO: Fix this.
     accel = 0.0;
-    while(st_left_enc_data.travel_dist < length - ref_dist_dec);
+    while(0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist) < length - ref_dist_dec);
     
     // This is when the speed is decreasing
-    // TODO: Fix this.
     goal_speed = min_speed;
     accel = (-1.0) * max_acc;
-    while(st_left_enc_data.travel_dist < length);
+    while(0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)< length);
+
+    // DEBUG
+    // get_encoder_val();
 
     // Reseting the encoder
-    clear_encoder(htim2); clear_encoder(htim3);
+    motor_encode_init();
+    // Reseting the speed variables
 }
 
 void turn(float length, float max_acc, float init_sp, float max_sp, float tar_sp){
