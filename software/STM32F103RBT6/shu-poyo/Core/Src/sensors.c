@@ -8,6 +8,7 @@ extern ADC_HandleTypeDef hadc1;
 extern stDIST_SEN st_sen[DIST_SEN_NUM];
 
 void get_sensor_values(void){
+    printf("========== \n\r");
     printf("R: %4d \n\r", st_sen[DIST_SEN_R].s_cur);
     printf("FR: %4d \n\r", st_sen[DIST_SEN_FR].s_cur);
     printf("FL: %4d \n\r", st_sen[DIST_SEN_FL].s_cur);
@@ -27,7 +28,7 @@ void sensors_init(void){
     st_sen[DIST_SEN_FL].s_ref = SEN_REF_FL;
     st_sen[DIST_SEN_L].s_ref = SEN_REF_L;
     
-    printf("Initiated sensor params... \n\r");
+    // printf("Initiated sensor params... \n\r");
 }
 
 void read_sensor_R(void){
