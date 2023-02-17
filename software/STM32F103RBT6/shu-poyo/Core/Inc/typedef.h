@@ -17,7 +17,7 @@ typedef struct{
 typedef struct{
     uint16_t e_cur;         // The current encoder value
     uint16_t e_prev;        // The previous encoder value
-    float dist_buff;        // The distance travelled every 1ms in mm
+    volatile float dist_buff;        // The distance travelled every 1ms in mm
     volatile float travel_dist;      // The distance travelled in mm
 }stENCODER_DATA;
 
