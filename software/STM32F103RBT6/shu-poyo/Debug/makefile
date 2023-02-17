@@ -62,7 +62,7 @@ main-build: shu-poyo.elf secondary-outputs
 
 # Tool invocations
 shu-poyo.elf: $(OBJS) $(USER_OBJS) /Users/shu_rt/ws/shu-rt/micromouse/shu-poyo/software/STM32F103RBT6/shu-poyo/STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "shu-poyo.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/Users/shu_rt/ws/shu-rt/micromouse/shu-poyo/software/STM32F103RBT6/shu-poyo/STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="shu-poyo.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "shu-poyo.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/Users/shu_rt/ws/shu-rt/micromouse/shu-poyo/software/STM32F103RBT6/shu-poyo/STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="shu-poyo.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
