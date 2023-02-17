@@ -29,6 +29,7 @@
 #include "motors.h"
 #include "sensors.h"
 
+#include "adjust.h"
 #include "run.h"
 /* USER CODE END Includes */
 
@@ -105,9 +106,9 @@ void mode_LED(int mode){
 }
 
 void exec_mode(int mode){
-  HAL_Delay(500);
+  HAL_Delay(50);
   start_motors();
-  HAL_Delay(500);
+  HAL_Delay(50);
 
   switch(mode){
     case 1:
@@ -115,19 +116,28 @@ void exec_mode(int mode){
     case 2:
       break;
     case 3:
+      run_to_wall(SEARCH_ACCEL, 0.0, SEARCH_SPEED);
       break;
     case 4:
-      straight(HALF_SECTION, SEARCH_ACCEL, 0, SEARCH_SPEED, 0);
       break;
     case 5:
+      // Get the sensor values
+      stop_motors();
+      while(1){
+        get_sensor_values();
+        HAL_Delay(50);
+        printf("\x1B[2J"); // Clears the terminal
+        printf("\x1B[0;0H"); // Moves the cursor to the top
+      }
       break;
     case 6:
+      printf("Target Speed: %f \n\r", goal_speed);
+      straight(SECTION_LEN*5, SEARCH_ACCEL*0.5, 0.0, SEARCH_SPEED*0.5, 0.0);
       break;
     case 7:
       break;
   }
 
-  // probably turn the motor off?
   stop_motors();
 }
 /* USER CODE END 0 */
@@ -178,12 +188,14 @@ int main(void)
   // Motor settings
   MOTOR_MODE_SET_PE;
   stop_motors();
-  // TODO: Start the counter in each modes or run functions
-  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); // Start encoder 
-  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); // Start encoder 
   // Initiate the parameters
+  duty_rate = 0.0;
   sensors_init();
+  speed_val_init();
   motor_encode_init();
+  // Start the encoders
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL); 
   // Start TIM4
   HAL_TIM_Base_Start_IT(&htim4);
   // Turns LED0 ON!
@@ -221,9 +233,6 @@ int main(void)
 
     }
 
-    start_motors();
-    straight(HALF_SECTION, SEARCH_ACCEL, 0.0, SEARCH_SPEED, 0.0);
-    stop_motors();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
