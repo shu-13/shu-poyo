@@ -214,13 +214,13 @@ void TIM4_IRQHandler(void)
   read_sensor_FR(); for(int i=0; i<100; i++);
   read_sensor_L(); for(int i=0; i<100; i++);
   // Check the battery value
-  check_batt(); for(int i=0; i<100; i++); 
+  check_batt(); 
   // Update the traveled distance
-  encoder_update(); for(int i=0; i<100; i++);
+  encoder_update();
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */
-  speed_update(); for(int i=0; i<100; i++);
+  speed_update();
   /* USER CODE END TIM4_IRQn 1 */
 }
 
