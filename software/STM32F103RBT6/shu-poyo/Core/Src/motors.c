@@ -15,10 +15,11 @@ stENCODER_DATA st_right_enc_data;
 
 // Proto types
 void clear_encoder(TIM_HandleTypeDef);
+void set_encoder(TIM_HandleTypeDef, uint16_t);
 
 /* INIT FUNCTION */
 void motor_encode_init(void){
-    duty_rate = 0.0;
+    enc_speed = 0.0;
 
     st_left_enc_data.e_cur = 0.0;
     st_left_enc_data.e_prev = 0.0;
@@ -30,6 +31,7 @@ void motor_encode_init(void){
     st_right_enc_data.travel_dist = 0.0;
 
     clear_encoder(htim2); clear_encoder(htim3);
+    set_encoder(htim2, 32767); set_encoder(htim3, 32767);
 }
 
 
@@ -68,6 +70,9 @@ void speed_update(void){
     prev_speed = err_speed;
 
     duty_rate = FF_GAIN + v_PID;
+    if (duty_rate > 90.0){
+        duty_rate = 90.0;
+    }
 
     // if(RUN_MODE == straight){
         MOTORR_FORWARD; MOTORL_FORWARD;
@@ -82,27 +87,35 @@ void clear_encoder(TIM_HandleTypeDef htim){
     htim.Instance->CNT = 0;
 }
 
+void set_encoder(TIM_HandleTypeDef htim, uint16_t cnt){
+    htim.Instance->CNT = cnt;
+}
+
+void get_encoder_val(void){
+    // printf("Encoder Left raw (e_cur) : %5d \n\r", st_left_enc_data.e_cur);
+    // printf("Encoder Right raw (e_cur) : %5d \n\r", st_right_enc_data.e_cur);
+    printf("Encoder Left (travel_dist) : %4.2f \n\r", st_left_enc_data.travel_dist);
+    printf("Encoder Right (travel_dist) : %4.2f \n\r", st_right_enc_data.travel_dist);
+}
+
 uint16_t read_left_encoder(void){
-    // Do you need to clear the count???
     uint16_t enc_buff = htim2.Instance->CNT;
-    // htim2.Instance->CNT = 0;
     return enc_buff;
 }
 
 uint16_t read_right_encoder(void){
-    // Do you need to clear the count???
     uint16_t enc_buff = htim3.Instance->CNT;
-    // htim3.Instance->CNT = 0;
     return enc_buff;
 }
 
 float calc_dist(uint16_t cur, uint16_t prev){
     // Calculates the distance in mm
     float dist = 0.0;
-    uint16_t diff = 0;
-    
+    float diff = 0.0;
+    int16_t enc_diff = (int16_t)cur - (int16_t)prev;
+
     // Gets the number of rotation
-    diff = cur - prev;
+    diff = (float)enc_diff / ((PULSES_PER_ROTATE * 2.0) - 1.0) ;
 
     // Calculates the distance
     dist = diff * GEAR_RATIO * WHEEL_DIAMETER * PI;
@@ -113,10 +126,13 @@ void encoder_update(void){
     // Updates the encoder structure value
     st_left_enc_data.e_cur = read_left_encoder();
     st_right_enc_data.e_cur = read_right_encoder();
+    // Set the encoder value to half of 65535
+    set_encoder(htim2, 32767); set_encoder(htim3, 32767);
 
     // Calculates the travelled distance in 1ms
-    st_left_enc_data.dist_buff = calc_dist(st_left_enc_data.e_cur, st_left_enc_data.e_prev);    
-    st_right_enc_data.dist_buff = calc_dist(st_right_enc_data.e_cur, st_right_enc_data.e_prev);
+    // The left encoder is faced the opposite from the right
+    st_left_enc_data.dist_buff = (-1.0) * calc_dist(st_left_enc_data.e_cur, 32767);    
+    st_right_enc_data.dist_buff = calc_dist(st_right_enc_data.e_cur, 32767);
     // Calculates the speed based off of the encoder value
     enc_speed = st_left_enc_data.dist_buff * 0.001; // in mm/s
 
