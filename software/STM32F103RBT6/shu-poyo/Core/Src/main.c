@@ -116,7 +116,6 @@ void exec_mode(int mode){
     case 2:
       break;
     case 3:
-      run_to_wall(SEARCH_ACCEL, 0.0, SEARCH_SPEED);
       break;
     case 4:
       break;
@@ -125,20 +124,21 @@ void exec_mode(int mode){
       stop_motors();
       while(1){
         get_sensor_values();
+        get_encoder_val();
         HAL_Delay(50);
         printf("\x1B[2J"); // Clears the terminal
         printf("\x1B[0;0H"); // Moves the cursor to the top
       }
       break;
     case 6:
-      printf("Target Speed: %f \n\r", goal_speed);
-      straight(SECTION_LEN*5, SEARCH_ACCEL*0.5, 0.0, SEARCH_SPEED*0.5, 0.0);
+      straight(FULL_SECTION, SEARCH_ACCEL*0.5, 0.0, SEARCH_SPEED*0.5, 0.0);
       break;
     case 7:
+      run_to_wall(SEARCH_ACCEL, 0.0, SEARCH_SPEED);
       break;
   }
 
-  stop_motors();
+  // stop_motors();
 }
 /* USER CODE END 0 */
 
