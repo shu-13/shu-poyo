@@ -27,6 +27,9 @@ enum enMAP_HEAD_DIR{
     MAP_HEAD_DIR_MAX,
 };
 
+/* run mode */
+enRUN_MODE RUN_MODE;
+
 /* Speed and accelerations */
 float duty_rate;       // in %
 float init_speed;       // the robot's speed when it starts to run in mm/s

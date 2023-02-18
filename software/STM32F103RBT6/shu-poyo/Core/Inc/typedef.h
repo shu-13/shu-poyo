@@ -9,6 +9,7 @@ typedef struct{
     uint16_t s_prev;        // The previous sensor value (LED ON)
     uint16_t s_limit;       // The sensors limit, AKA the value when its near the wall
     uint16_t s_ref;         // The sensors reference value
+    uint16_t s_th;          // The sensors threshold value
     uint16_t s_ctrl;        // Toggle for sensor control
     uint16_t s_noctrl;      // Toggle for non-sensor control
 }stDIST_SEN;
@@ -21,14 +22,21 @@ typedef struct{
     volatile float travel_dist;      // The distance travelled in mm
 }stENCODER_DATA;
 
+/* enum for the robot's run mode*/
+typedef enum{
+    MODE_FORWARD = 0,
+    MODE_REAR,
+    MODE_STOP,
+    MODE_TURN,
+}enRUN_MODE;
 
 /* enum for the robot's next direction */
 typedef enum{
-    FRONT=0,
-    RIGHT,
-    REAR,
-    LEFT,
-    UNKNOWN,
+    LOCAL_FRONT = 0,
+    LOCAL_RIGHT,
+    LOCAL_REAR,
+    LOCAL_LEFT,
+    LOCAL_UNKNOWN,
 }enLOCAL_DIRECTION;
 
 /* The structure for the robot's position 

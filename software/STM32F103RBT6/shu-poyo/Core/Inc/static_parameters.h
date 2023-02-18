@@ -4,12 +4,12 @@
 #include "stm32f1xx_hal.h"
 
 // Maze info
-#define SECTION_LEN (180) // in mm
-#define HALF_SECTION (SECTION_LEN / 2) // in mm
-#define MAZE_SIZE_X (3)
-#define MAZE_SIZE_Y (3)
-#define GOAL_X      (2)
-#define GOAL_Y      (2)
+#define FULL_SECTION (180.0) // in mm
+#define HALF_SECTION (FULL_SECTION * 0.5) // in mm
+#define MAZE_SIZE_X (16)
+#define MAZE_SIZE_Y (16)
+#define GOAL_X      (7)
+#define GOAL_Y      (8)
 
 // System
 #define SYSCLOCK_HZ (36000000)

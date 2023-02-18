@@ -24,9 +24,13 @@ void sensors_init(void){
     SENSOR_OUT_L_OFF;
 
     st_sen[DIST_SEN_R].s_ref = SEN_REF_R;
-    st_sen[DIST_SEN_FR].s_ref = SEN_REF_FR;
-    st_sen[DIST_SEN_FL].s_ref = SEN_REF_FL;
     st_sen[DIST_SEN_L].s_ref = SEN_REF_L;
+
+    st_sen[DIST_SEN_R].s_th = SEN_TH_R;
+    st_sen[DIST_SEN_FR].s_th = SEN_TH_FR;
+    st_sen[DIST_SEN_FL].s_th = SEN_TH_FL;
+    st_sen[DIST_SEN_L].s_th = SEN_TH_L;
+
     
     // printf("Initiated sensor params... \n\r");
 }

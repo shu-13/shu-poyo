@@ -48,20 +48,28 @@ void test_run_forward(TIM_HandleTypeDef *htim){
 }
 
 void straight(float length, float max_acc, float init_sp, float max_sp, float tar_sp){
+    // Reseting the encoder
+    motor_encode_init();
+    // DEBUG
+    // get_encoder_val();
+    // Reseting the speed variables
     speed_val_init();
+    // Sets RUN MODE
+    RUN_MODE = MODE_FORWARD;
+
     // Stores the maximum speed
     // This is used in the function used in the timer
     max_speed = max_sp;
     accel = max_acc;
 
-    // Checks if the initial speed is bigger than the minimum
+    // Checks if the initial speed is lower than the minimum
     // Also sets the speed value
     if(init_sp < MIN_SPEED){
         init_speed = MIN_SPEED;
     }else{
         init_speed = init_sp;
     }
-    // Checks if the target is bigger than the minimum speed
+    // Checks if the target is lower than the minimum speed
     if(tar_sp < MIN_SPEED){
         tar_sp = MIN_SPEED;
     }
@@ -81,23 +89,20 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
 
     // This is when the speed is increasing
     goal_speed = max_speed;
-    while(0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist) < ref_dist_inc);
+    while((0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)) < ref_dist_inc);
 
     // This is when the speed is consistant
     accel = 0.0;
-    while(0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist) < length - ref_dist_dec);
+    while((0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)) < (length - ref_dist_dec));
     
     // This is when the speed is decreasing
     goal_speed = min_speed;
     accel = (-1.0) * max_acc;
-    while(0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)< length);
+    while((0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)) < length);
 
     // DEBUG
-    // get_encoder_val();
-
-    // Reseting the encoder
-    motor_encode_init();
-    // Reseting the speed variables
+    // printf("Calculated travel distance : %4.2f \n\r",
+    //         0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)); // ok
 }
 
 void turn(float length, float max_acc, float init_sp, float max_sp, float tar_sp){
