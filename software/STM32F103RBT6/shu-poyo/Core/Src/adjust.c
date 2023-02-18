@@ -10,8 +10,8 @@ void run_to_wall(float max_acc, float init_sp, float max_sp){
     max_speed = max_sp;
     accel = max_acc;
 
-    // Move half section
-    straight(HALF_SECTION, accel, 0.0, max_speed, max_speed);
+    // Move half of half section
+    straight(HALF_SECTION*0.25, accel, 0.0, max_speed, max_speed);
 
     while(1){
         get_sensor_values();
@@ -19,10 +19,11 @@ void run_to_wall(float max_acc, float init_sp, float max_sp){
         if((st_sen[DIST_SEN_L].s_cur < st_sen[DIST_SEN_L].s_ref)
             || (st_sen[DIST_SEN_R].s_cur < st_sen[DIST_SEN_R].s_ref)){
             // If there's no wall, move half section
-            straight(SECTION_LEN, accel, max_speed, max_speed, max_speed);
+            straight(HALF_SECTION, accel, max_speed, max_speed, max_speed);
         }else{
             // If there's a wall, move a little and stop
-            straight(HALF_SECTION*0.6, accel, max_speed, max_speed, 0.0);
+            straight(HALF_SECTION*0.01, accel, max_speed, max_speed, 0.0);
+            RUN_MODE = MODE_STOP;
             break;
         }
         printf("\x1B[2J"); // Clears the terminal
