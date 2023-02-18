@@ -38,8 +38,8 @@ void motor_encode_init(void){
 /* MOTOR RELATED FUNCTIONS */
 void stop_motors(void){
     // Stops PWM output
-    HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2);    
-    HAL_TIM_PWM_Stop(&htim1, MOTORR_CH2);    
+    HAL_TIM_PWM_Stop(&htim1, MOTORL_CH2);
+    HAL_TIM_PWM_Stop(&htim1, MOTORR_CH2); 
 }
 
 void start_motors(void){
