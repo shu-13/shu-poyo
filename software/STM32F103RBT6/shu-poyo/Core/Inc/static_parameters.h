@@ -39,9 +39,9 @@
 #define LED3_OFF HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 0);
 
 // Switches
-#define READ_SW0 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7)
-#define READ_SW1 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8)
-#define READ_SW2 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9)
+#define READ_SW0 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_7);
+#define READ_SW1 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
+#define READ_SW2 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9);
 
 #define SW_ON (0)
 #define SW_OFF (1)
