@@ -70,19 +70,36 @@ void speed_update(void){
     prev_speed = err_speed;
 
     duty_rate = FF_GAIN + v_PID;
-    if (duty_rate > 90.0){
-        duty_rate = 90.0;
+    if (duty_rate > 75.0){
+        duty_rate = 75.0;
     }
 
     if(RUN_MODE == MODE_FORWARD){
         MOTORR_FORWARD; MOTORL_FORWARD;
-        
-        __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
-        __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
+
+    }else if(RUN_MODE == MODE_TURN){
+        if(NEXT_DIR == NEXT_LEFT){
+            MOTORL_BACK; MOTORR_FORWARD;
+        }
+        if(NEXT_DIR == NEXT_RIGHT){
+            MOTORL_FORWARD; MOTORR_BACK;
+        }
+    }else if(RUN_MODE == MODE_ROTATE){
+        if(NEXT_DIR == NEXT_LEFT){
+            MOTORL_BACK; MOTORR_FORWARD;
+        }
+        if(NEXT_DIR == NEXT_RIGHT){
+            MOTORL_FORWARD; MOTORR_BACK;
+        }
+    }else if(RUN_MODE == MODE_REAR){
+        MOTORL_BACK; MOTORR_BACK;
+
     }else if(RUN_MODE == MODE_STOP){
-        __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, 0.0);
-        __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, 0.0);
+        duty_rate = 0.0;
     }
+
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
 } 
 
 /* ENCODER RELATED FUNCTIONS */
@@ -135,12 +152,12 @@ void encoder_update(void){
     st_left_enc_data.dist_buff = (-1.0) * calc_dist(st_left_enc_data.e_cur, 32767);    
     st_right_enc_data.dist_buff = calc_dist(st_right_enc_data.e_cur, 32767);
     // Calculates the speed based off of the encoder value
-    // enc_speed = 0.5 * (st_left_enc_data.dist_buff + st_right_enc_data.dist_buff) * 0.001; // in mm/s
+    enc_speed = 0.5 * (st_left_enc_data.dist_buff + st_right_enc_data.dist_buff) * 0.001; // in mm/s
 
     // Sums up the travelled distance
     st_left_enc_data.travel_dist += st_left_enc_data.dist_buff;
     st_right_enc_data.travel_dist += st_right_enc_data.dist_buff;
-    enc_speed = 0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist) * 0.001; // in mm/s
+    // enc_speed = 0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist) * 0.001; // in mm/s
 
     // Saves the current data
     st_left_enc_data.e_prev = st_left_enc_data.e_cur;
