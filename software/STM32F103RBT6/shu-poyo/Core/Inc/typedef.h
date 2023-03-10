@@ -28,23 +28,33 @@ typedef enum{
     MODE_REAR,
     MODE_STOP,
     MODE_TURN,
+    MODE_ROTATE,
 }enRUN_MODE;
 
 /* enum for the robot's next direction */
 typedef enum{
-    LOCAL_FRONT = 0,
-    LOCAL_RIGHT,
-    LOCAL_REAR,
-    LOCAL_LEFT,
-    LOCAL_UNKNOWN,
-}enLOCAL_DIRECTION;
+    NEXT_FRONT = 0,
+    NEXT_RIGHT,
+    NEXT_REAR,
+    NEXT_LEFT,
+    NEXT_UNKNOWN,
+}enNEXT_DIRECTION;
+
+/* Direction */
+typedef enum{
+    NORTH = 0,
+    EAST,
+    SOUTH,
+    WEST,
+    MAP_HEAD_DIR_MAX,
+}enMAP_HEAD_DIR;
 
 /* The structure for the robot's position 
 // And it's facing direction */
 typedef struct{
     short x;
     short y;
-    enLOCAL_DIRECTION dir;
+    enMAP_HEAD_DIR m_dir;  // The facing direction
 }stPOSITION;
 
 

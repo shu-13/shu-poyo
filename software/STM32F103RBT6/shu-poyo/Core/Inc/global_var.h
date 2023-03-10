@@ -18,17 +18,11 @@ stDIST_SEN st_sen[DIST_SEN_NUM];
 /* Battery value */
 uint16_t batt_val;
 
-/* Direction */
-enum enMAP_HEAD_DIR{
-    NORTH = 0,
-    EAST,
-    SOUTH,
-    WEST,
-    MAP_HEAD_DIR_MAX,
-};
 
-/* run mode */
+
+/* Running stuff */
 enRUN_MODE RUN_MODE;
+enNEXT_DIRECTION NEXT_DIR;
 
 /* Speed and accelerations */
 float duty_rate;       // in %
