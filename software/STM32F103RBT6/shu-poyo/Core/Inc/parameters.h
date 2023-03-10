@@ -13,8 +13,11 @@
 
 
 // Run parameters
-#define SEARCH_SPEED (100)  // [mm/s]
+#define SEARCH_SPEED (50)  // [mm/s]
 #define SEARCH_ACCEL (1000) // [mm/s/s]
+
+#define ROT_SPEED (30)  // [mm/s]
+#define ROT_ACCEL (1000) // [mm/s/s]
 
 // PID control things
 #define K_P     (0.15)
