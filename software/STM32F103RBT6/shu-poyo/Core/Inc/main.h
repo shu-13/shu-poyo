@@ -76,10 +76,10 @@ void exec_mode(int mode);
 #define EncoderL_CH2_GPIO_Port GPIOA
 #define ADC_BATT_Pin GPIO_PIN_2
 #define ADC_BATT_GPIO_Port GPIOA
-#define BUZZ_Level_Pin GPIO_PIN_4
-#define BUZZ_Level_GPIO_Port GPIOA
-#define BUZZ_OnOff_Pin GPIO_PIN_5
-#define BUZZ_OnOff_GPIO_Port GPIOA
+#define BUZZ_Hi_Pin GPIO_PIN_4
+#define BUZZ_Hi_GPIO_Port GPIOA
+#define BUZZ_Low_Pin GPIO_PIN_5
+#define BUZZ_Low_GPIO_Port GPIOA
 #define EncoderR_CH1_Pin GPIO_PIN_6
 #define EncoderR_CH1_GPIO_Port GPIOA
 #define EncoderR_CH2_Pin GPIO_PIN_7
