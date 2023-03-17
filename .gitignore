@@ -49,3 +49,6 @@ ehthumbs.db
 Thumbs.db
 .metadata
 
+# VS Code related files #
+#########################
+*.json
