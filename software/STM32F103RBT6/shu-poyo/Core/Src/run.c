@@ -29,21 +29,30 @@ void speed_val_init(void){
 }
 
 void test_run_forward(TIM_HandleTypeDef *htim){
+    // Use this function when the timer update for motor and encoder is off.
+    htim2.Instance->CNT = 0;  htim3.Instance->CNT = 0;
+    uint16_t enc_r = 0;
+    uint16_t enc_l = 0;
     // Sets the pulse for the duty ratio. 
     // The pulse's maximum value = Counter Period
     // duty ratio = pulse / Counter Period 
     for(uint8_t i=0; i<5; i++){
         __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 18*(i+1));
         __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 18*(i+1));
+        // Read the encoder value
+        enc_r += htim2.Instance->CNT;  enc_l += htim3.Instance->CNT;
+        printf("1. Encoder value Right: %d, Left: %d \n\r", enc_r, enc_l);
 
-        HAL_Delay(1000);
+        HAL_Delay(300);
     }
 
     for(uint8_t i=0; i<5; i++){
         __HAL_TIM_SET_COMPARE(htim, MOTORL_CH2, 18*(5-i));
         __HAL_TIM_SET_COMPARE(htim, MOTORR_CH2, 18*(5-i));
+        enc_r += htim2.Instance->CNT;  enc_l += htim3.Instance->CNT;
+        printf("2. Encoder value Right: %d, Left: %d \n\r", enc_r, enc_l);
 
-        HAL_Delay(1000);
+        HAL_Delay(300);
     }
 }
 
