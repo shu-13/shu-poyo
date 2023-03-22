@@ -2,8 +2,6 @@
 #ifndef __SENSORS_H
 #define __SENSORS_H
 
-#include "main.h"
-
 void sensors_init(void);
 void get_sensor_values(void);
 

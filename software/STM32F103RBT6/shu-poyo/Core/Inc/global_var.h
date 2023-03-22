@@ -3,7 +3,6 @@
 #define __GLOBAL_VAR_H
 
 #include "typedef.h"
-#include <stdio.h>
 
 /* Sensor values */
 enum enDIST_SEN_ID{

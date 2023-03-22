@@ -3,6 +3,7 @@
 #include "sensors.h"
 #include "parameters.h"
 #include "global_var.h"
+#include <stdio.h>
 
 extern ADC_HandleTypeDef hadc1;
 extern stDIST_SEN st_sen[DIST_SEN_NUM];
