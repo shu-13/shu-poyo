@@ -4,6 +4,7 @@
 #include "motors.h"
 #include "global_var.h"
 #include "parameters.h"
+#include <stdio.h>
 
 // From the main.c
 extern TIM_HandleTypeDef htim2;
@@ -99,10 +100,16 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     // This is when the speed is increasing
     goal_speed = max_speed;
     while((0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)) < ref_dist_inc);
+    // DEBUG
+    // printf("Accel Traveled: %4.2f [mm] \n\r",
+    //         0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist));
 
     // This is when the speed is consistant
     accel = 0.0;
     while((0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)) < (length - ref_dist_dec));
+    // DEBUG
+    // printf("Flat Traveled: %4.2f [mm] \n\r",
+    //         0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist));
     
     // This is when the speed is decreasing
     goal_speed = min_speed;
@@ -110,14 +117,17 @@ void straight(float length, float max_acc, float init_sp, float max_sp, float ta
     while((0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)) < length);
 
     // DEBUG
-    // printf("Calculated travel distance : %4.2f \n\r",
-    //         0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist)); // ok
+    // printf("Goal distance : %.1f [mm] \n\r", length);
+    // printf("Calculated travel distance : %4.2f [mm] \n\r",
+            // 0.5 * (st_left_enc_data.travel_dist + st_right_enc_data.travel_dist));
 }
 
+// Steering
 void turn(float length, float max_acc, float init_sp, float max_sp, float tar_sp){
 
 }
 
+// In place rotation
 void rotate(enNEXT_DIRECTION n_dir, int rot_num){
     // Initiate values
     motor_encode_init();
@@ -132,9 +142,9 @@ void rotate(enNEXT_DIRECTION n_dir, int rot_num){
     accel = ROT_ACCEL;
 
     // Calculates the length (1/4 circle * rot_num)
-    // float r_length = TREAD_WIDTH * PI * 0.25 * (float)rot_num;
+    float r_length = TREAD_WIDTH * PI * 0.25 * (float)rot_num;
     // THERE'S STILL A BUG! GIVING A SMALLER VAL
-    float r_length = 0.25 * TREAD_WIDTH * PI * 0.25 * (float)rot_num;
+    // float r_length = 0.25 * TREAD_WIDTH * PI * 0.25 * (float)rot_num;
 
     // The travelling distance to reach the maximum / stopping speed
     // At the beginning and end of the route
@@ -167,7 +177,7 @@ void back(float length, float max_acc, float init_sp, float max_sp, float tar_sp
     speed_val_init();
     // Sets RUN MODE
     RUN_MODE = MODE_REAR;
-    MOTORL_BACK; MOTORL_BACK;
+    // MOTORL_BACK; MOTORL_BACK;
 
     // Stores the maximum speed
     // This is used in the function used in the timer

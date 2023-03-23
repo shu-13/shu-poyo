@@ -106,18 +106,32 @@ void mode_LED(int mode){
 }
 
 void exec_mode(int mode){
+  // Clears the terminal
+  printf("\x1b[2J");
+  // Moves the cursor to 0, 0 of the terminal
+  printf("\x1b[0;0H");
+  mode_LED(0);
   HAL_Delay(50);
   start_motors();
   HAL_Delay(50);
 
   switch(mode){
     case 1:
+      straight(HALF_SECTION, SEARCH_ACCEL, 0.0, SEARCH_SPEED, 0.0);
       break;
     case 2:
+      get_encoder_val();
+      motor_encode_init();
       break;
     case 3:
       break;
     case 4:
+      // Testing a couple of things here
+      back(HALF_SECTION*0.2, SEARCH_ACCEL*0.5, 0.0, SEARCH_SPEED*0.5, 0.0);
+      HAL_Delay(50);
+      straight(HALF_SECTION*0.4, SEARCH_ACCEL*0.5, 0.0, SEARCH_SPEED*0.5, 0.0);
+      HAL_Delay(50);
+      test_left_hand(SEARCH_ACCEL, 0.0, SEARCH_SPEED);
       break;
     case 5:
       // Get the sensor values
@@ -131,14 +145,16 @@ void exec_mode(int mode){
       }
       break;
     case 6:
-      straight(FULL_SECTION, SEARCH_ACCEL*0.5, 0.0, SEARCH_SPEED*0.5, 0.0);
+      // straight(HALF_SECTION, SEARCH_ACCEL, 0.0, SEARCH_SPEED, 0.0);
+      NEXT_DIR = NEXT_LEFT;
+      rotate(NEXT_DIR, 1);
       break;
     case 7:
       run_to_wall(SEARCH_ACCEL, 0.0, SEARCH_SPEED);
       break;
   }
 
-  // stop_motors();
+  stop_motors();
 }
 /* USER CODE END 0 */
 
@@ -739,7 +755,7 @@ static void MX_GPIO_Init(void)
                           |LED1_Pin|LED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, BUZZ_Level_Pin|BUZZ_OnOff_Pin|MotorL_CH1_Pin|MotorR_CH1_Pin
+  HAL_GPIO_WritePin(GPIOA, BUZZ_Hi_Pin|BUZZ_Low_Pin|MotorL_CH1_Pin|MotorR_CH1_Pin
                           |Motor_Mode_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
@@ -757,9 +773,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUZZ_Level_Pin BUZZ_OnOff_Pin MotorL_CH1_Pin MotorR_CH1_Pin
+  /*Configure GPIO pins : BUZZ_Hi_Pin BUZZ_Low_Pin MotorL_CH1_Pin MotorR_CH1_Pin
                            Motor_Mode_Pin */
-  GPIO_InitStruct.Pin = BUZZ_Level_Pin|BUZZ_OnOff_Pin|MotorL_CH1_Pin|MotorR_CH1_Pin
+  GPIO_InitStruct.Pin = BUZZ_Hi_Pin|BUZZ_Low_Pin|MotorL_CH1_Pin|MotorR_CH1_Pin
                           |Motor_Mode_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;

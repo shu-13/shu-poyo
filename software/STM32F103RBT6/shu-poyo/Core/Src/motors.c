@@ -66,6 +66,8 @@ void speed_update(void){
 
     v_PID = err_speed*K_P + err_sum*K_I + (prev_speed - err_speed)*K_D; 
     
+    // Place wall control step here
+
     // Update the prev_speed
     prev_speed = err_speed;
 
@@ -86,10 +88,10 @@ void speed_update(void){
         }
     }else if(RUN_MODE == MODE_ROTATE){
         if(NEXT_DIR == NEXT_LEFT){
-            MOTORL_BACK; MOTORR_FORWARD;
+            // Will need to change the acceleration amount
         }
         if(NEXT_DIR == NEXT_RIGHT){
-            MOTORL_FORWARD; MOTORR_BACK;
+            // Will need to change the acceleration amount
         }
     }else if(RUN_MODE == MODE_REAR){
         MOTORL_BACK; MOTORR_BACK;
