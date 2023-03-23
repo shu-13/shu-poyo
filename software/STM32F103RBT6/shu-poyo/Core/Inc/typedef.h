@@ -10,9 +10,18 @@ typedef struct{
     uint16_t s_limit;       // The sensors limit, AKA the value when its near the wall
     uint16_t s_ref;         // The sensors reference value
     uint16_t s_th;          // The sensors threshold value
-    uint16_t s_ctrl;        // Toggle for sensor control
-    uint16_t s_noctrl;      // Toggle for non-sensor control
+    uint16_t s_ctrl;        // Toggle for sensor control, Yes: 1, No: 0
+    uint16_t s_wall;        // Toggle if there's a wall, Yes: 1, No: 0
 }stDIST_SEN;
+
+/* enum for each sensor id */
+enum enDIST_SEN_ID{
+    DIST_SEN_R = 0,
+    DIST_SEN_L,
+    DIST_SEN_FR,
+    DIST_SEN_FL,
+    DIST_SEN_NUM,
+};
 
 /* Structure for the encoder values */
 typedef struct{
@@ -30,6 +39,14 @@ typedef enum{
     MODE_TURN,
     MODE_ROTATE,
 }enRUN_MODE;
+
+/* Structure for the robot's wall control */
+typedef struct{
+    int enable;         // 0 for disable, 1 for enable
+    float control;      // Control amount
+    float error;        // Deflecting amount
+    float prev_error;   // Previous error
+}stCON_WALL;
 
 /* enum for the robot's next direction */
 typedef enum{

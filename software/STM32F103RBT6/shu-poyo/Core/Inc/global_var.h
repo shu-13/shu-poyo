@@ -5,23 +5,15 @@
 #include "typedef.h"
 
 /* Sensor values */
-enum enDIST_SEN_ID{
-    DIST_SEN_R = 0,
-    DIST_SEN_L,
-    DIST_SEN_FR,
-    DIST_SEN_FL,
-    DIST_SEN_NUM,
-};
 stDIST_SEN st_sen[DIST_SEN_NUM];
 
 /* Battery value */
 uint16_t batt_val;
 
-
-
 /* Running stuff */
 enRUN_MODE RUN_MODE;
 enNEXT_DIRECTION NEXT_DIR;
+stPOSITION ROBOT_POSITION;
 
 /* Speed and accelerations */
 float duty_rate;       // in %
