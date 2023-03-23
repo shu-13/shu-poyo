@@ -7,7 +7,8 @@
 #define CHATTERING_WAIT (50)    // in ms
 
 // wheel params
-#define WHEEL_DIAMETER      (27.15)    // in mm
+#define WHEEL_DIAMETER      (43.15)    // in mm
+// #define WHEEL_DIAMETER      (27.15)    // in mm
 #define WHEEL_RADIUS        (WHEEL_DIAMETER * 0.5) // in mm
 #define TREAD_WIDTH         (80.0)    // in mm
 
