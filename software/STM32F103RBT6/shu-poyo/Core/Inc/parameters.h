@@ -20,6 +20,9 @@
 #define ROT_SPEED (30)  // [mm/s]
 #define ROT_ACCEL (1000) // [mm/s/s]
 
+// The amount of wall reference control
+#define CON_WALL (0.0)
+
 // PID control things
 #define K_P     (0.15)
 #define K_I     (0.001)
@@ -35,6 +38,8 @@
 
 #define SEN_REF_R  (200)        // For the front wall, when the mouse is at the center of the section
 #define SEN_REF_L  (200)        // For the front wall, when the mouse is at the center of the section
+
+#define SEN_MAX    (2000)
 
 #define __PARAMETERS_H
 
