@@ -70,8 +70,8 @@ void speed_update(void){
     prev_speed = err_speed;
 
     duty_rate = FF_GAIN + v_PID;
-    if (duty_rate > 75.0){
-        duty_rate = 75.0;
+    if (duty_rate > 80.0){
+        duty_rate = 80.0;
     }
 
     if(RUN_MODE == MODE_FORWARD){
