@@ -213,6 +213,7 @@ void TIM4_IRQHandler(void)
   read_sensor_FL(); for(int i=0; i<100; i++);
   read_sensor_FR(); for(int i=0; i<100; i++);
   read_sensor_L(); for(int i=0; i<100; i++);
+  sensor_controls_update(); 
   // Check the battery value
   check_batt(); 
   // Update the traveled distance

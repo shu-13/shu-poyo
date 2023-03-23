@@ -10,5 +10,6 @@ void read_sensor_L(void);
 void read_sensor_FR(void);
 void read_sensor_FL(void);
 
+void sensor_controls_update(void);
 
 #endif /* __SENSORS_H */

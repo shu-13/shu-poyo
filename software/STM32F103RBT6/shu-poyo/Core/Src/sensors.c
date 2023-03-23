@@ -32,8 +32,38 @@ void sensors_init(void){
     st_sen[DIST_SEN_FL].s_th = SEN_TH_FL;
     st_sen[DIST_SEN_L].s_th = SEN_TH_L;
 
-    
+    st_sen[DIST_SEN_R].s_limit = SEN_MAX;
+    st_sen[DIST_SEN_FR].s_limit = SEN_MAX;
+    st_sen[DIST_SEN_FL].s_limit = SEN_MAX;
+    st_sen[DIST_SEN_L].s_limit = SEN_MAX;
+
     // printf("Initiated sensor params... \n\r");
+}
+
+void sensor_controls_update(void){
+    // Determines if there's a wall
+    if(st_sen[DIST_SEN_R].s_cur > st_sen[DIST_SEN_R].s_th){
+        st_sen[DIST_SEN_R].s_wall = 1;
+    }else{
+        st_sen[DIST_SEN_R].s_wall = 0;
+    }
+    if(st_sen[DIST_SEN_L].s_cur > st_sen[DIST_SEN_L].s_th){
+        st_sen[DIST_SEN_L].s_wall = 1;
+    }else{
+        st_sen[DIST_SEN_L].s_wall = 0;
+    }
+
+    // Determines if the robot needs wall control
+    if(st_sen[DIST_SEN_FR].s_cur > st_sen[DIST_SEN_FR].s_th){
+        st_sen[DIST_SEN_FR].s_ctrl = 1;
+    }else{
+        st_sen[DIST_SEN_FR].s_ctrl = 0;
+    }
+    if(st_sen[DIST_SEN_FL].s_cur > st_sen[DIST_SEN_FL].s_th){
+        st_sen[DIST_SEN_FL].s_ctrl = 1;
+    }else{
+        st_sen[DIST_SEN_FL].s_ctrl = 0;
+    }
 }
 
 void read_sensor_R(void){
