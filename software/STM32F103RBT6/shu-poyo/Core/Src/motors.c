@@ -57,6 +57,8 @@ float calc_pulse(double duty){
 
 void speed_update(void){
     // 1ms割り込みで実行
+    // duty rate for the left and right
+    float duty_rate_l, duty_rate_r;
     // goal_speed is the target speed
     goal_speed += accel * 0.001; // Updates speed every 1ms
 
@@ -72,9 +74,6 @@ void speed_update(void){
     prev_speed = err_speed;
 
     duty_rate = FF_GAIN + v_PID;
-    if (duty_rate > 80.0){
-        duty_rate = 80.0;
-    }
 
     if(RUN_MODE == MODE_FORWARD){
         MOTORR_FORWARD; MOTORL_FORWARD;
@@ -100,8 +99,16 @@ void speed_update(void){
         duty_rate = 0.0;
     }
 
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
-    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, MOTOR_COUNTER_PERIOD*duty_rate*0.01);
+    // Sets the maximum duty_rate
+    if(duty_rate > 80.0){
+        duty_rate = 80.0;
+    }
+
+    duty_rate_l = duty_rate;
+    duty_rate_r = duty_rate;
+
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORL_CH2, MOTOR_COUNTER_PERIOD*duty_rate_l*0.01);
+    __HAL_TIM_SET_COMPARE(&htim1, MOTORR_CH2, MOTOR_COUNTER_PERIOD*duty_rate_r*0.01);
 } 
 
 /* ENCODER RELATED FUNCTIONS */
