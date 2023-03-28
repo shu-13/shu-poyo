@@ -26,6 +26,8 @@ Motor Driver: ?
 |GNU Tools |arm-none-eabi-gcc |9.2.1 |
 
 ### インストール方法
+#### macOS
+
 VS Codeは[こちら](https://code.visualstudio.com/download)からインストールしましょう  
 C/C++とCodeDebuggerのエクステンションも用意するとよいです  
 
@@ -43,7 +45,8 @@ $ brew install open-ocd
 
 STM32CubeMXは[こちら](https://www.st.com/ja/development-tools/stm32cubemx.html)からダウンロードしましょう  
 `SetupSTM32CubeMX-X.X.X.app`を起動して、インストールしていきます  
-#### うまく起動しない場合
+
+##### うまく起動しない場合
 ダブルクリックなどで、SetupSTM32CubeMXが起動しない場合は次のコマンドを実行してみましょう  
 (ダウンロードしたファイルに含まれているREADME.htmlに書かれていました)  
 ```sh

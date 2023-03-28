@@ -26,6 +26,8 @@ Motor Driver: ?
 |GNU Tools |arm-none-eabi-gcc |9.2.1 |
 
 ### Install
+#### macOS
+
 Download VS Code from [here](https://code.visualstudio.com/download)  
 It may be good to download extensions such as **C/C++** and **Code Debugger**  
 
@@ -47,6 +49,7 @@ If nothing starts,
 ```sh
 (Directory where the .app file is)$ sudo xattr -cr ./SetupSTM32CubeMX-6.2.1.app 
 ```
+
 ### Flash write!
 #### Blue Pill　(STM32F103C8T6)
 Connect SWCLK, SWDIO, GND, and 3.3V of the Blue Pill and ST-Link V2 via wires.  
